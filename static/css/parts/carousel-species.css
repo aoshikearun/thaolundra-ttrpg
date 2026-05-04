@@ -1,0 +1,500 @@
+/* carousel-species.css - Carrossel 3D para seleção de espécies */
+
+/* Container principal do carrossel */
+.species-carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.carousel {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.carousel-item {
+    --items: 11;
+    --width: clamp(260px, 28vw, 320px);
+    --height: 480px;
+    --x: calc(var(--active) * 800%);
+    --y: calc(var(--active) * 200%);
+    --rot: calc(var(--active) * 120deg);
+    --opacity: calc(var(--zIndex) / var(--items) * 3 - 2);
+    
+    position: absolute;
+    z-index: var(--zIndex);
+    width: var(--width);
+    height: var(--height);
+    margin: calc(var(--height) * -0.5) 0 0 calc(var(--width) * -0.5);
+    border-radius: 20px;
+    top: 50%;
+    left: 50%;
+    user-select: none;
+    transform-origin: 0% 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    pointer-events: all;
+    transform: translate(var(--x), var(--y)) rotate(var(--rot));
+    transition: transform 0.8s cubic-bezier(0, 0.02, 0, 1);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Cards avançados (borda roxa) */
+.carousel-item.advanced {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                linear-gradient(135deg, #9b59b6, #8e44ad, #6c3483) border-box;
+}
+
+.carousel-item.advanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #9b59b6, #8e44ad, #6c3483);
+}
+
+/* Cards híbridos (borda dourada) */
+.carousel-item.hybrid {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+                linear-gradient(135deg, #ffd700, #ffb347, #ff8c42) border-box;
+}
+
+.carousel-item.hybrid::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ffd700, #ffb347, #ff8c42);
+}
+
+/* Box interno do card */
+.carousel-box {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.8s cubic-bezier(0, 0.02, 0, 1);
+    opacity: var(--opacity);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Overlay gradiente */
+.carousel-box::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 0.2) 0%, 
+        rgba(0, 0, 0, 0) 30%, 
+        rgba(0, 0, 0, 0) 60%, 
+        rgba(0, 0, 0, 0.6) 100%);
+    pointer-events: none;
+}
+
+/* Imagem de fundo */
+.carousel-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+/* Número da espécie */
+.carousel-num {
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    left: 20px;
+    font-size: clamp(40px, 8vw, 70px);
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: monospace;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Nome da espécie */
+.carousel-title {
+    position: absolute;
+    z-index: 2;
+    bottom: 80px;
+    left: 20px;
+    right: 20px;
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+/* Poder (mín/máx) */
+.carousel-power {
+    position: absolute;
+    z-index: 2;
+    bottom: 50px;
+    left: 20px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 4px 10px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.carousel-power span {
+    color: #ffb347;
+    font-weight: bold;
+}
+
+/* Descrição (resumida) */
+.carousel-desc {
+    position: absolute;
+    z-index: 2;
+    bottom: 15px;
+    left: 20px;
+    right: 20px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+/* Badge de espécie avançada */
+.species-badge {
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    right: 15px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
+}
+
+.species-badge.hybrid {
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    color: #1a1a2e;
+}
+
+/* Badge de fonte de poder */
+.fonte-badge {
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    right: 15px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    color: #ffb347;
+}
+
+/* Layout decorativo */
+.carousel-layout {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.carousel-layout::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 90px;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.carousel-layout .box {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: var(--text-muted);
+    transform-origin: 0% 10%;
+    transform: rotate(-90deg);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    white-space: nowrap;
+}
+
+/* Cursores customizados */
+.carousel-cursor {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 179, 71, 0.5);
+    margin: -20px 0 0 -20px;
+    transition: transform 0.4s cubic-bezier(0, 0.02, 0, 1);
+    pointer-events: none;
+    backdrop-filter: blur(2px);
+    display: none;
+}
+
+.carousel-cursor.cursor2 {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--primary);
+    border: none;
+    transition-duration: 0.2s;
+}
+
+@media (pointer: fine) {
+    .carousel-cursor {
+        display: block;
+    }
+}
+
+/* ===== MODAL DO CARROSSEL ===== */
+.species-carousel-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay-color);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: none;
+    flex-direction: column;
+}
+
+.species-carousel-modal.active {
+    display: flex;
+}
+
+/* Cabeçalho do modal */
+.carousel-modal-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+    pointer-events: none;
+}
+
+.carousel-modal-header h2 {
+    color: white;
+    font-size: 24px;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.carousel-modal-header p {
+    color: rgba(255,255,255,0.7);
+    margin: 5px 0 0;
+    font-size: 14px;
+}
+
+.carousel-close {
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+    pointer-events: auto;
+}
+
+.carousel-close:hover {
+    background: var(--danger);
+    transform: scale(1.05);
+}
+
+/* Rodapé do modal com ações */
+.carousel-modal-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    pointer-events: none;
+}
+
+.carousel-modal-footer .btn {
+    pointer-events: auto;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.carousel-modal-footer .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #000;
+}
+
+.carousel-modal-footer .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 179, 71, 0.4);
+}
+
+.carousel-modal-footer .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.carousel-modal-footer .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Loading */
+.carousel-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.carousel-loading i {
+    font-size: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    .species-carousel-container {
+        min-height: 500px;
+    }
+    
+    .carousel {
+        min-height: 500px;
+    }
+    
+    .carousel-item {
+        --height: 400px;
+        --width: 220px;
+    }
+    
+    .carousel-title {
+        font-size: 18px;
+        bottom: 70px;
+    }
+    
+    .carousel-power {
+        font-size: 10px;
+        bottom: 45px;
+    }
+    
+    .carousel-desc {
+        font-size: 9px;
+        -webkit-line-clamp: 2;
+    }
+    
+    .carousel-modal-header {
+        padding: 15px 20px;
+    }
+    
+    .carousel-modal-header h2 {
+        font-size: 18px;
+    }
+    
+    .carousel-modal-footer {
+        padding: 15px 20px;
+    }
+    
+    .carousel-modal-footer .btn {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+    
+    .carousel-layout .box {
+        font-size: 8px;
+        left: 15px;
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item {
+        --height: 340px;
+        --width: 200px;
+    }
+    
+    .carousel-title {
+        font-size: 16px;
+        bottom: 60px;
+    }
+    
+    .carousel-num {
+        font-size: 30px;
+        top: 10px;
+        left: 12px;
+    }
+    
+    .species-badge,
+    .fonte-badge {
+        font-size: 9px;
+        padding: 3px 8px;
+        top: 10px;
+        right: 10px;
+    }
+}

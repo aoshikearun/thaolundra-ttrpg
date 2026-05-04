@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/usuarios.css') }}">
+{% endblock %}
+
+{% block title %}Gerenciar Usuários - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="usuarios-container">
+    <div class="usuarios-header">
+        <h1>👥 Gerenciar Usuários</h1>
+    </div>
+
+    <div class="filtros">
+        <input type="text" id="filtro-usuarios" placeholder="🔍 Buscar usuário..." class="search-input">
+        <button class="btn btn-secondary" onclick="carregarUsuarios()">🔄 Atualizar</button>
+    </div>
+
+    <div id="usuarios-table-container">
+        <div class="loading">Carregando usuários...</div>
+    </div>
+</div>
+
+<div id="modal-container" class="modal-container"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pages/gerenciar_usuarios.js') }}"></script>
+{% endblock %}

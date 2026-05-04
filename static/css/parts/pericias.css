@@ -1,0 +1,295 @@
+/* pericias.css - Tudo relacionado às perícias (fase 1 e 2) */
+
+.fase-selecao, .fase-distribuicao {
+    animation: fadeIn 0.3s ease;
+}
+
+.fase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.fase-header h3 {
+    color: var(--primary);
+    margin: 0;
+}
+
+.limites-info {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.limite-badge {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--bg-tertiary);
+}
+
+.limite-badge.combate { border-left: 3px solid #ef4444; }
+.limite-badge.Ofício { border-left: 3px solid #10b981; }
+.limite-badge.conhecimento { border-left: 3px solid #3b82f6; }
+.limite-badge.vontade { border-left: 3px solid #8b5cf6; }
+
+.pericias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.pericia-card {
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.pericia-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+
+.pericia-card.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(255, 179, 71, 0.3);
+}
+
+.pericia-card.combate { --bg-start: rgba(239, 68, 68, 0.15); --bg-end: rgba(239, 68, 68, 0.05); --border-color: rgba(239, 68, 68, 0.3); }
+.pericia-card.conhecimento { --bg-start: rgba(59, 130, 246, 0.15); --bg-end: rgba(59, 130, 246, 0.05); --border-color: rgba(59, 130, 246, 0.3); }
+.pericia-card.Ofício { --bg-start: rgba(16, 185, 129, 0.15); --bg-end: rgba(16, 185, 129, 0.05); --border-color: rgba(16, 185, 129, 0.3); }
+.pericia-card.vontade { --bg-start: rgba(139, 92, 246, 0.15); --bg-end: rgba(139, 92, 246, 0.05); --border-color: rgba(139, 92, 246, 0.3); }
+.pericia-card.simples { --bg-start: rgba(107, 114, 128, 0.15); --bg-end: rgba(107, 114, 128, 0.05); --border-color: rgba(107, 114, 128, 0.3); }
+.pericia-card.sociais { --bg-start: rgba(245, 158, 11, 0.15); --bg-end: rgba(245, 158, 11, 0.05); --border-color: rgba(245, 158, 11, 0.3); }
+
+.pericia-card .card-header {
+    padding: 20px 20px 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.pericia-card .pericia-nome {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.pericia-card.combate .pericia-nome { color: #ef4444; }
+.pericia-card.conhecimento .pericia-nome { color: #3b82f6; }
+.pericia-card.Ofício .pericia-nome { color: #10b981; }
+.pericia-card.vontade .pericia-nome { color: #8b5cf6; }
+.pericia-card.simples .pericia-nome { color: #9ca3af; }
+.pericia-card.sociais .pericia-nome { color: #f59e0b; }
+
+.pericia-card .card-categoria {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+.pericia-card .category-icon {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.3);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.pericia-card .card-body {
+    padding: 12px 20px 20px 20px;
+}
+
+.pericia-card .card-desc {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+}
+
+.pericia-card .card-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pericia-card .select-indicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: transparent;
+    transition: all 0.2s;
+}
+
+.pericia-card.selected .select-indicator {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(255, 179, 71, 0.5);
+}
+
+/* ===== FASE 2 - DISTRIBUIÇÃO ===== */
+.resumo-pontos {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.pontos-disponiveis span {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.barra-pontos {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 300px;
+}
+
+.barra-pontos-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #ff8c42);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.pontos-usados {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.pericias-selecionadas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.pericia-card-compact {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.pericia-card-compact:hover {
+    border-color: var(--primary-border);
+    background: var(--bg-hover);
+}
+
+.pericia-info-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pericia-icon-compact {
+    font-size: 20px;
+    width: 32px;
+    text-align: center;
+}
+
+.pericia-nome-compact {
+    font-weight: bold;
+    color: var(--text-primary);
+    font-size: 15px;
+}
+
+.pericia-categoria-compact {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.pontos-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-ponto {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    color: var(--primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-ponto:hover {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.btn-ponto.danger:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.valor-ponto {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary);
+    min-width: 40px;
+    text-align: center;
+}
+
+.fase-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-light);
+}
+
+.btn-next-fase {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-prev-fase {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}

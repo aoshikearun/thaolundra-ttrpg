@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Acesso Negado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas class="fog-animation" id="fogCanvas"></canvas>
+
+    <div class="error-container">
+        <div class="error-content">
+            <h1><i class="fas fa-ban"></i> 403</h1>
+            <h2>Acesso Negado</h2>
+
+            <div class="error-quote">
+                <p><i class="fas fa-quote-left"></i> Os anões cavaram fundo e cobiçoso demais. Você sabe o que eles despertaram na escuridão de Khazad-dûm... escuridão e chamas. <i class="fas fa-quote-right"></i></p>
+                <p class="quote-author">— Gandalf</p>
+            </div>
+
+            <div class="error-description">
+                <p><i class="fas fa-exclamation-triangle"></i> {{ description }}</p>
+            </div>
+
+            <div class="error-actions">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Retornar ao Login
+                </a>
+                <a href="{{ url_for('main.main_page') }}" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Página Principal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/403.js') }}"></script>
+</body>
+</html>

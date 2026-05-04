@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thaolundra RPG</title>
+
+    <!-- CSS Unificado -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-dragon"></i> Thaolundra</h3>
+            <p class="sidebar-subtitle">RPG System</p>
+        </div>
+
+        <div class="sidebar-group">
+            <h4><i class="fas fa-users"></i> Personagens</h4>
+            <button class="sidebar-btn" onclick="openWindow('todos_personagens')">
+                <i class="fas fa-users"></i> Galeria
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('criar_personagem')">
+                <i class="fas fa-plus-circle"></i> Criar Personagem
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('meus_personagens')">
+                <i class="fas fa-scroll"></i> Meus Personagens
+            </button>
+        </div>
+
+        <div class="sidebar-group">
+            <h4><i class="fas fa-dice-d20"></i> Mesas</h4>
+            <button class="sidebar-btn" onclick="openWindow('mesas')">
+                <i class="fas fa-dice-d20"></i> Mesas Ativas
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('minhas_mesas')">
+                <i class="fas fa-crown"></i> Minhas Mesas
+            </button>
+        </div>
+
+        <div class="sidebar-group">
+            <h4><i class="fas fa-tools"></i> Administração</h4>
+            <button class="sidebar-btn" onclick="openWindow('gerenciar_conteudo')">
+                <i class="fas fa-book"></i> Gerenciar Conteúdo
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('gerenciar_usuarios')">
+                <i class="fas fa-user-cog"></i> Gerenciar Usuários
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('gerenciar_mesas')">
+                <i class="fas fa-chess-board"></i> Gerenciar Mesas
+            </button>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <div class="user-details">
+                    <strong>{{ user.username if user else 'Visitante' }}</strong>
+                    <small>
+                        {% if user %}
+                            {% if user.nivel_credencial == 0 %}Espectador
+                            {% elif user.nivel_credencial == 1 %}Jogador
+                            {% elif user.nivel_credencial == 2 %}Narrador
+                            {% elif user.nivel_credencial == 3 %}Guardião
+                            {% elif user.nivel_credencial == 4 %}Moderador
+                            {% elif user.nivel_credencial == 5 %}Administrador
+                            {% else %}Nível {{ user.nivel_credencial }}
+                            {% endif %}
+                        {% else %}
+                            Visitante
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+            <button class="sidebar-btn logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <h1><i class="fas fa-dragon"></i> Thaolundra RPG</h1>
+                <p>Sistema de gerenciamento de campanhas</p>
+            </div>
+            <div class="header-right">
+                <!-- Theme.js vai inserir os controles aqui -->
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="welcome-message">
+                <h2>✨ Bem-vindo ao Thaolundra RPG</h2>
+                <p>Selecione uma opção no menu lateral para começar</p>
+            </div>
+        </div>
+
+        <footer class="main-footer">
+            <p>Thaolundra RPG © 2026 - Sistema de Gerenciamento</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Ajuda</a>
+                <a href="#"><i class="fas fa-book"></i> Documentação</a>
+                <a href="#"><i class="fas fa-bug"></i> Reportar Bug</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                window.location.href = '/logout';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Mesas - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="mesas-container">
+    <div class="page-header">
+        <h2>🎲 Mesas Disponíveis</h2>
+    </div>
+
+    <div class="mesas-grid">
+        {% for mesa in mesas %}
+        <div class="mesa-card">
+            <div class="mesa-card-header">
+                <h3>{{ mesa.nome }}</h3>
+                <span class="capacidade-badge">👥 {{ mesa.participantes_atual or 0 }}/{{ mesa.capacidade }}</span>
+            </div>
+            <div class="mesa-card-body">
+                <p class="mesa-descricao">{{ mesa.descricao or 'Sem descrição' }}</p>
+                <p class="mesa-narrador">🎭 Narrador: {{ mesa.narrador_nome or 'Desconhecido' }}</p>
+            </div>
+            <div class="mesa-card-footer">
+                <a href="{{ url_for('mesa.mesa', mesa_id=mesa.id) }}" class="btn btn-primary">Entrar na Mesa</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-message">
+            <p>Nenhuma mesa disponível no momento.</p>
+            <p>Entre em contato com um narrador para ser convidado.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,406 @@
+/* view_sheet.css - Ficha completa (frente e verso) */
+
+.sheet-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+}
+
+/* ===== TABS ===== */
+.tabs {
+    display: flex;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 16px 24px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    font-family: inherit;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    background: var(--bg-hover);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    background: var(--bg-tertiary);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ===== CONTEÚDO ===== */
+.ficha-inner, .verso-inner {
+    padding: 28px 32px 32px 32px;
+}
+
+/* ===== LINHA SUPERIOR ===== */
+.top-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr 2fr 1.5fr;
+    gap: 12px;
+    margin-bottom: 28px;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-label {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.field-value {
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-light);
+    padding: 4px 0;
+    color: var(--primary);
+}
+
+/* ===== ATRIBUTOS ===== */
+.atributos-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.atributo-card {
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid var(--border-light);
+}
+
+.atributo-nome {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: var(--text-muted);
+}
+
+.atributo-valor {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary);
+    line-height: 1;
+    margin: 6px 0;
+}
+
+.atributo-base {
+    font-size: 0.55rem;
+    color: var(--text-muted);
+}
+
+/* ===== TESTES + COMBATE ===== */
+.testes-combate-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.testes-box, .combate-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+}
+
+.section-titulo {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.testes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.teste-item {
+    text-align: center;
+    background: var(--bg-secondary);
+    padding: 8px;
+    border-radius: var(--border-radius-md);
+}
+
+.teste-nome {
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.teste-valor {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.combate-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.combate-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-md);
+    font-size: 0.75rem;
+}
+
+.combate-item strong {
+    color: var(--primary);
+}
+
+/* ===== PERÍCIAS e TÉCNICAS ===== */
+.pericias-tecnicas-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.lista-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+}
+
+.lista-titulo {
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--primary);
+}
+
+.lista-items {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.lista-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-bottom: 1px dashed var(--border-light);
+    font-size: 0.75rem;
+}
+
+/* ===== DANO LOCALIZADO + VITALIDADE ===== */
+.corpo-vital-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.corpo-box, .vital-box {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+}
+
+.corpo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.corpo-item {
+    text-align: center;
+    background: var(--bg-secondary);
+    padding: 6px;
+    border-radius: var(--border-radius-md);
+    font-size: 0.7rem;
+}
+
+.corpo-item .field-value {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.vital-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.vital-item {
+    text-align: center;
+}
+
+.vital-valor {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.vital-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    padding: 4px 0;
+    color: var(--text-muted);
+}
+
+.rodape-info {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.65rem;
+    text-align: center;
+}
+
+/* ===== VERSO ===== */
+.verso-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.verso-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.verso-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.verso-card-header {
+    background: var(--bg-secondary);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-light);
+    font-weight: bold;
+    color: var(--primary);
+    font-size: 0.75rem;
+}
+
+.verso-card-body {
+    padding: 12px 16px;
+}
+
+.qualidade-item, .defeito-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border-light);
+    font-size: 0.75rem;
+}
+
+.qualidade-score {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.defeito-score {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+.inventario-item, .equipamento-item, .pet-item {
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border-light);
+    font-size: 0.7rem;
+}
+
+.equipamento-item {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.equip-pos {
+    font-weight: bold;
+    color: var(--primary);
+    min-width: 60px;
+}
+
+.equip-nome {
+    flex: 1;
+}
+
+.anotacoes-texto {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 12px;
+    font-size: 0.7rem;
+    line-height: 1.4;
+    min-height: 120px;
+    white-space: pre-wrap;
+}
+
+/* ===== BOTÕES DE AÇÃO ===== */
+.sheet-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 32px;
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-secondary);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 800px) {
+    .ficha-inner, .verso-inner { padding: 16px; }
+    .top-row { grid-template-columns: repeat(3, 1fr); }
+    .atributos-row { grid-template-columns: repeat(3, 1fr); }
+    .testes-combate-row { grid-template-columns: 1fr; }
+    .pericias-tecnicas-row { grid-template-columns: 1fr; }
+    .corpo-vital-row { grid-template-columns: 1fr; }
+    .verso-grid { grid-template-columns: 1fr; }
+    .rodape-info { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 500px) {
+    .atributos-row { grid-template-columns: repeat(2, 1fr); }
+    .top-row { grid-template-columns: repeat(2, 1fr); }
+}

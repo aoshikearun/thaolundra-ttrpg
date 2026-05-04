@@ -1,0 +1,579 @@
+/* items.css - Inventário, equipamento e gerenciamento de itens */
+
+/* ============================================ */
+/* 1. EQUIPAMENTO (SLOTS DINÂMICOS - 2 COLUNAS) */
+/* ============================================ */
+
+.equipamento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.equip-slot {
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--border-light);
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.equip-slot.vazio {
+    border-color: var(--border-light);
+    background: var(--bg-secondary);
+    opacity: 0.7;
+}
+
+.equip-slot.equipado {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+}
+
+.equip-slot-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 2;
+    min-width: 180px;
+}
+
+.equip-slot-posicao {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    min-width: 70px;
+}
+
+.equip-slot-icone {
+    font-size: 1.2rem;
+}
+
+.equip-slot-nome {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: var(--primary);
+}
+
+.equip-slot-nome.vazio {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.equip-slot-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.equip-slot-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.equip-slot-durabilidade {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+}
+
+.equip-slot-durabilidade-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--bg-secondary);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.equip-slot-durabilidade-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.equip-slot-acoes {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-size: 0.7rem;
+}
+
+.btn-icon:hover {
+    background: var(--bg-hover);
+    color: var(--primary);
+}
+
+.btn-icon.danger:hover {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+/* Botão para adicionar novo slot vazio */
+.add-slot-btn {
+    margin-top: 12px;
+    background: var(--primary-bg);
+    border: 1px dashed var(--primary);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-slot-btn:hover {
+    background: rgba(255, 179, 71, 0.2);
+}
+
+
+/* ============================================ */
+/* 2. INVENTÁRIO */
+/* ============================================ */
+
+.inventario-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.inventario-titulo {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.inventario-stats {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.inventario-filtros {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filtro-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filtro-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filtro-btn.ativo {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.inventario-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+/* Scrollbar do inventário */
+.inventario-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.inventario-grid::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+.inventario-grid::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+/* Cards de item */
+.item-card {
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-light);
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+    min-height: 100px;
+}
+
+.item-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.item-card.equipado {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+}
+
+.item-card .item-icon {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.item-card .item-nome {
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Quantidade - canto superior esquerdo */
+.item-card .item-quantidade {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px 6px;
+    border-radius: 12px;
+    color: var(--primary);
+}
+
+/* Peso - canto superior direito */
+.item-card .item-peso {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 0.65rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 6px;
+    border-radius: 12px;
+    color: var(--text-secondary);
+}
+
+.item-card .item-stats {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    margin: 8px 0 4px;
+}
+
+.item-card .item-durabilidade {
+    margin-top: 6px;
+    height: 3px;
+    background: var(--bg-secondary);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.item-card .item-durabilidade-bar {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Ações do item (hover overlay) */
+.item-actions-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.item-card:hover .item-actions-overlay {
+    opacity: 1;
+}
+
+.item-action-btn {
+    background: var(--bg-tertiary);
+    border: none;
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.item-action-btn:hover {
+    background: var(--primary);
+    color: #000;
+}
+
+.item-action-btn.danger {
+    color: var(--danger);
+}
+
+.item-action-btn.danger:hover {
+    background: var(--danger);
+    color: white;
+}
+
+
+/* ============================================ */
+/* 3. TABELA DE ITENS (GERENCIAMENTO) */
+/* ============================================ */
+
+.itens-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.itens-table th,
+.itens-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.itens-table th {
+    background: var(--bg-tertiary);
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.itens-table tr:hover td {
+    background: var(--primary-bg);
+}
+
+.item-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.6rem;
+    font-weight: bold;
+}
+
+.tag-arma { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.tag-armadura { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.tag-acessorio { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+.tag-consumivel { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+.tag-municao { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+.tag-outro { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
+
+
+/* ============================================ */
+/* 4. FORMULÁRIO DE CRIAÇÃO DE ITEM */
+/* ============================================ */
+
+.form-criar-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.form-criar-item .full-width {
+    grid-column: 1 / -1;
+}
+
+.form-criar-item .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-criar-item .form-group label {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+.form-criar-item .form-group input,
+.form-criar-item .form-group select,
+.form-criar-item .form-group textarea {
+    padding: 8px 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+.form-criar-item .form-group input:focus,
+.form-criar-item .form-group select:focus,
+.form-criar-item .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+
+/* ============================================ */
+/* 5. DRAG & DROP SIDEBAR (MESA) */
+/* ============================================ */
+
+.inventario-drag-container {
+    display: flex;
+    gap: 20px;
+    position: relative;
+}
+
+.inventario-drag-grid {
+    flex: 1;
+}
+
+.drag-handle {
+    width: 32px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 4px;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+
+/* ============================================ */
+/* 6. AÇÕES GLOBAIS */
+/* ============================================ */
+
+.items-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+}
+
+.btn-item {
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-item-primary {
+    background: var(--primary);
+    color: #000;
+    border: none;
+}
+
+.btn-item-primary:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+.btn-item-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+}
+
+.btn-item-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--primary);
+}
+
+.btn-item-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger-border);
+}
+
+.btn-item-danger:hover {
+    background: var(--danger);
+    color: white;
+}
+
+
+/* ============================================ */
+/* 7. RESPONSIVIDADE */
+/* ============================================ */
+
+@media (max-width: 800px) {
+    .equipamento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-criar-item {
+        grid-template-columns: 1fr;
+    }
+
+    .inventario-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 500px) {
+    .inventario-drag-container {
+        flex-direction: column;
+    }
+
+    .drag-handle {
+        width: 100%;
+        height: 32px;
+        writing-mode: horizontal-tb;
+        flex-direction: row;
+    }
+}

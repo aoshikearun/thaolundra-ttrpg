@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/gerenciar_conteudo.css') }}">
+{% endblock %}
+
+{% block title %}Gerenciar Conteúdo - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="gerenciar-container">
+    <div class="gerenciar-header">
+        <h1>📚 Gerenciar Conteúdo</h1>
+    </div>
+
+    <div class="gerenciar-nav">
+        <button class="nav-btn active" data-tab="especies">🐾 Espécies</button>
+        <button class="nav-btn" data-tab="pericias">🎯 Perícias</button>
+        <button class="nav-btn" data-tab="tecnicas">✨ Técnicas</button>
+        <button class="nav-btn" data-tab="fontes">🔮 Fontes de Poder</button>
+        <button class="nav-btn" data-tab="itens">🛡️ Itens</button>
+        <button class="nav-btn" data-tab="regioes">🗺️ Regiões</button>
+    </div>
+
+    <div class="gerenciar-content">
+        <!-- ESPÉCIES -->
+        <div id="tab-especies" class="tab-content active">
+            <div class="tab-header">
+                <h2>🐾 Espécies</h2>
+                <button class="btn btn-primary" onclick="criarEspecie()">➕ Nova Espécie</button>
+            </div>
+            <div class="stats-bar">
+                <span id="especies-stats">Carregando estatísticas...</span>
+            </div>
+            <div class="filtros">
+                <input type="text" id="filtro-especies" placeholder="🔍 Buscar espécie..." class="search-input">
+                <button class="btn btn-secondary" onclick="carregarEspecies()">🔄 Atualizar</button>
+            </div>
+            <div id="especies-list" class="content-list">
+                <div class="loading">Carregando espécies...</div>
+            </div>
+        </div>
+
+        <!-- PERÍCIAS -->
+        <div id="tab-pericias" class="tab-content">
+            <div class="tab-header">
+                <h2>🎯 Perícias</h2>
+                <button class="btn btn-primary" onclick="criarPericia()">➕ Nova Perícia</button>
+            </div>
+            <div class="stats-bar">
+                <span id="pericias-stats">Carregando estatísticas...</span>
+            </div>
+            <div class="filtros">
+                <input type="text" id="filtro-pericias" placeholder="🔍 Buscar perícia..." class="search-input">
+                <select id="filtro-categoria-pericia" class="filter-select">
+                    <option value="">Todas categorias</option>
+                    <option value="Simples">Simples</option>
+                    <option value="Sociais">Sociais</option>
+                    <option value="Combate">Combate</option>
+                    <option value="Conhecimento">Conhecimento</option>
+                    <option value="Ofício">Ofício</option>
+                    <option value="Vontade">Vontade</option>
+                </select>
+                <button class="btn btn-secondary" onclick="carregarPericias()">🔄 Atualizar</button>
+            </div>
+            <div id="pericias-list" class="content-list">
+                <div class="loading">Carregando perícias...</div>
+            </div>
+        </div>
+
+        <!-- TÉCNICAS -->
+        <div id="tab-tecnicas" class="tab-content">
+            <div class="tab-header">
+                <h2>✨ Técnicas</h2>
+                <button class="btn btn-primary" onclick="criarTecnica()">➕ Nova Técnica</button>
+            </div>
+            <div class="stats-bar">
+                <span id="tecnicas-stats">Carregando estatísticas...</span>
+            </div>
+            <div class="filtros">
+                <input type="text" id="filtro-tecnicas" placeholder="🔍 Buscar técnica..." class="search-input">
+                <select id="filtro-categoria-tecnica" class="filter-select">
+                    <option value="">Todas categorias</option>
+                    <option value="Inata">Inata</option>
+                    <option value="Básica">Básica</option>
+                    <option value="Avançada">Avançada</option>
+                    <option value="Última">Última</option>
+                </select>
+                <select id="filtro-fonte-tecnica" class="filter-select">
+                    <option value="">Todas fontes</option>
+                </select>
+                <button class="btn btn-secondary" onclick="carregarTecnicas()">🔄 Atualizar</button>
+            </div>
+            <div id="tecnicas-list" class="content-list">
+                <div class="loading">Carregando técnicas...</div>
+            </div>
+        </div>
+
+        <!-- FONTES DE PODER -->
+        <div id="tab-fontes" class="tab-content">
+            <div class="tab-header">
+                <h2>🔮 Fontes de Poder</h2>
+                <button class="btn btn-primary" onclick="criarFontePoder()">➕ Nova Fonte</button>
+            </div>
+            <div class="stats-bar">
+                <span id="fontes-stats">Carregando estatísticas...</span>
+            </div>
+            <div class="filtros">
+                <input type="text" id="filtro-fontes" placeholder="🔍 Buscar fonte..." class="search-input">
+                <button class="btn btn-secondary" onclick="carregarFontesPoder()">🔄 Atualizar</button>
+            </div>
+            <div id="fontes-list" class="content-list">
+                <div class="loading">Carregando fontes de poder...</div>
+            </div>
+        </div>
+
+        <!-- ITENS (placeholder) -->
+        <div id="tab-itens" class="tab-content">
+            <div class="tab-header">
+                <h2>🛡️ Itens</h2>
+                <button class="btn btn-primary" onclick="criarItem()">➕ Novo Item</button>
+            </div>
+            <div class="stats-bar">
+                <span id="itens-stats">Carregando estatísticas...</span>
+            </div>
+            <div class="filtros">
+                <input type="text" id="filtro-itens" placeholder="🔍 Buscar item..." class="search-input">
+                <select id="filtro-categoria-item" class="filter-select">
+                    <option value="">Todas categorias</option>
+                    <option value="Arma">Arma</option>
+                    <option value="Armadura">Armadura</option>
+                    <option value="Acessório">Acessório</option>
+                    <option value="Consumível">Consumível</option>
+                    <option value="Munição">Munição</option>
+                    <option value="Outro">Outro</option>
+                </select>
+                <button class="btn btn-secondary" onclick="carregarItens()">🔄 Atualizar</button>
+            </div>
+            <div id="itens-list" class="content-list">
+                <div class="loading">Carregando itens...</div>
+            </div>
+        </div>
+
+        <!-- REGIÕES (placeholder) -->
+        <div id="tab-regioes" class="tab-content">
+            <div class="tab-header">
+                <h2>🗺️ Regiões</h2>
+                <button class="btn btn-primary" onclick="criarRegiao()">➕ Nova Região</button>
+            </div>
+            <div class="stats-bar">
+                <span id="regioes-stats">Carregando estatísticas...</span>
+            </div>
+            <div class="filtros">
+                <input type="text" id="filtro-regioes" placeholder="🔍 Buscar região..." class="search-input">
+                <button class="btn btn-secondary" onclick="carregarRegioes()">🔄 Atualizar</button>
+            </div>
+            <div id="regioes-list" class="content-list">
+                <div class="loading">Carregando regiões...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA EDIÇÃO/CRIAÇÃO -->
+<div id="modal-container" class="modal-container"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/parts/gerenciar.js') }}"></script>
+{% endblock %}

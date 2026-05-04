@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/meus_personagens.css') }}">
+{% endblock %}
+
+{% block title %}Meus Personagens - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="meus-personagens-container">
+    <div class="page-header">
+        <h2>🎮 Meus Personagens</h2>
+        <a href="/criar-ficha" class="btn btn-primary">+ Novo Personagem</a>
+    </div>
+
+    <div class="personagens-grid">
+        {% for p in personagens %}
+        <div class="personagem-card gerenciar" data-id="{{ p.id }}">
+            <div class="personagem-card-header">
+                <h3>{{ p.nome_completo }}</h3>
+                <span class="nivel-badge">Nv. {{ p.nivel }}</span>
+            </div>
+            <div class="personagem-card-body">
+                <p><strong>{{ p.especie_nome }}</strong></p>
+                <p class="ocupacao">{{ p.ocupacao or 'Sem ocupação' }}</p>
+
+                <div class="atributos-compactos">
+                    <span class="atributo-compacto" title="Força">💪 {{ p.forca }}</span>
+                    <span class="atributo-compacto" title="Destreza">🏃 {{ p.destreza }}</span>
+                    <span class="atributo-compacto" title="Inteligência">🧠 {{ p.inteligencia }}</span>
+                    <span class="atributo-compacto" title="Constituição">❤️ {{ p.constituicao }}</span>
+                    <span class="atributo-compacto" title="Poder">⚡ {{ p.poder }}</span>
+                    <span class="atributo-compacto" title="Aparência">👤 {{ p.aparencia }}</span>
+                </div>
+
+                <div class="status-rapido">
+                    <span title="Força Vital">❤️ {{ p.forca_vital_atual or 0 }}</span>
+                    <span title="Poder Elemental">✨ {{ p.poder_elemental_atual or 0 }}</span>
+                    <span title="Experiência">📊 {{ p.experiencia or 0 }}</span>
+                </div>
+
+                {% if current_user.nivel_credencial >= 4 %}
+                <p class="jogador">Jogador: {{ p.jogador_nome }}</p>
+                {% endif %}
+            </div>
+            <div class="personagem-card-footer">
+                <div class="acoes-grid">
+                    <button class="btn-view" onclick="abrirFicha({{ p.id }})">👁️ Visualizar</button>
+                    <button class="btn-edit" onclick="editarPersonagem({{ p.id }})">✏️ Editar</button>
+                    <button class="btn-delete" onclick="excluirPersonagem({{ p.id }}, '{{ p.nome_completo }}')">🗑️ Excluir</button>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-scroll"></i>
+            <p>Você ainda não tem personagens.</p>
+            <a href="/criar-ficha" class="btn btn-primary">✨ Criar Primeiro Personagem</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="ficha-modal" class="modal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h3>📜 Ficha do Personagem</h3>
+            <button class="modal-close" onclick="fecharModal()">✕</button>
+        </div>
+        <div class="modal-body" id="ficha-modal-body">
+            <div class="loading">Carregando...</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pages/meus_personagens.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/view_sheet.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/items.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/progressao_exp.css') }}">
+{% endblock %}
+
+{% block title %}{{ personagem.nome_completo }} - Ficha{% endblock %}
+
+{% block content %}
+<div class="sheet-container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="frente">📜 FRENTE</button>
+        <button class="tab-btn" data-tab="verso">📖 VERSO</button>
+    </div>
+
+    <!-- FRENTE -->
+    <div id="tab-frente" class="tab-content active">
+        <div class="ficha-inner">
+            <div class="top-row">
+                <div class="field"><span class="field-label">NOME</span><span class="field-value">{{ personagem.nome_completo }}</span></div>
+                <div class="field"><span class="field-label">NÍVEL</span><span class="field-value">{{ personagem.nivel }}</span></div>
+                <div class="field"><span class="field-label">OCUPAÇÃO</span><span class="field-value">{{ personagem.ocupacao or '-' }}</span></div>
+                <div class="field"><span class="field-label">JOGADOR</span><span class="field-value">{{ personagem.jogador_nome or current_user.username }}</span></div>
+                <div class="field"><span class="field-label">FACÇÃO</span><span class="field-value">{{ personagem.faccao_nome or 'Nenhuma' }}</span></div>
+                <div class="field"><span class="field-label">MORADIA</span><span class="field-value">{{ personagem.moradia or '-' }}</span></div>
+            </div>
+
+            <div class="atributos-row">
+                <div class="atributo-card"><div class="atributo-nome">FOR</div><div class="atributo-valor">{{ personagem.forca }}</div><div class="atributo-base">base: {{ personagem.forca_base or personagem.forca }}</div></div>
+                <div class="atributo-card"><div class="atributo-nome">DEX</div><div class="atributo-valor">{{ personagem.destreza }}</div><div class="atributo-base">base: {{ personagem.destreza_base or personagem.destreza }}</div></div>
+                <div class="atributo-card"><div class="atributo-nome">INT</div><div class="atributo-valor">{{ personagem.inteligencia }}</div><div class="atributo-base">base: {{ personagem.inteligencia_base or personagem.inteligencia }}</div></div>
+                <div class="atributo-card"><div class="atributo-nome">CON</div><div class="atributo-valor">{{ personagem.constituicao }}</div><div class="atributo-base">base: {{ personagem.constituicao_base or personagem.constituicao }}</div></div>
+                <div class="atributo-card"><div class="atributo-nome">POD</div><div class="atributo-valor">{{ personagem.poder }}</div><div class="atributo-base">base: {{ personagem.poder_base or personagem.poder }}</div></div>
+                <div class="atributo-card"><div class="atributo-nome">APA</div><div class="atributo-valor">{{ personagem.aparencia }}</div><div class="atributo-base">base: {{ personagem.aparencia_base or personagem.aparencia }}</div></div>
+            </div>
+
+            <div class="testes-combate-row">
+                <div class="testes-box">
+                    <div class="section-titulo">🎲 TESTES</div>
+                    <div class="testes-grid">
+                        <div class="teste-item"><div class="teste-nome">💪 FÍSICOS</div><div class="teste-valor">{{ personagem.teste_fisico or (personagem.forca + personagem.constituicao) }}</div></div>
+                        <div class="teste-item"><div class="teste-nome">🏃 AGILIDADE</div><div class="teste-valor">{{ personagem.teste_agilidade or (personagem.destreza + personagem.inteligencia) }}</div></div>
+                        <div class="teste-item"><div class="teste-nome">🧠 MENTAIS</div><div class="teste-valor">{{ personagem.teste_mental or (personagem.inteligencia + personagem.poder) }}</div></div>
+                        <div class="teste-item"><div class="teste-nome">❤️ VITALIDADE</div><div class="teste-valor">{{ personagem.teste_vitalidade or ((personagem.constituicao + personagem.forca) // 2) }}</div></div>
+                    </div>
+                </div>
+                <div class="combate-box">
+                    <div class="section-titulo">⚔️ COMBATE</div>
+                    <div class="combate-grid">
+                        <div class="combate-item"><span>armadura</span><strong>{{ personagem.armadura or (personagem.constituicao + personagem.destreza // 2) }}</strong></div>
+                        <div class="combate-item"><span>dano base</span><strong>{{ personagem.dano_base or (personagem.forca + personagem.destreza) }}</strong></div>
+                        <div class="combate-item"><span>res. mágica</span><strong>{{ personagem.res_magica or (personagem.inteligencia + personagem.poder // 20) }}</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pericias-tecnicas-row">
+                <div class="lista-box">
+                    <div class="lista-titulo">📚 PERÍCIAS</div>
+                    <div class="lista-items">
+                        {% for p in pericias %}<div class="lista-item"><span>{{ p.icone or '📌' }} {{ p.nome }}{{ ' (' + p.arma_nome + ')' if p.arma_nome else '' }}</span><span>{{ p.pontos }}</span></div>{% else %}<div class="lista-item"><span>Nenhuma perícia</span><span>-</span></div>{% endfor %}
+                    </div>
+                </div>
+                <div class="lista-box">
+                    <div class="lista-titulo">✨ TÉCNICAS</div>
+                    <div class="lista-items">
+                        {% for t in tecnicas %}<div class="lista-item"><span>{{ t.icone or '✨' }} {{ t.nome }}</span><span>{{ t.pontos }}</span></div>{% else %}<div class="lista-item"><span>Nenhuma técnica</span><span>-</span></div>{% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="corpo-vital-row">
+                <div class="corpo-box">
+                    <div class="section-titulo">🛡️ LOCALIZAÇÕES</div>
+                    <div class="corpo-grid">
+                        <div class="corpo-item"><span>BRAÇO E</span><div class="field-value">{{ personagem.braco_e or '-' }}</div></div>
+                        <div class="corpo-item"><span>BRAÇO D</span><div class="field-value">{{ personagem.braco_d or '-' }}</div></div>
+                        <div class="corpo-item"><span>TORSO</span><div class="field-value">{{ personagem.torso or '-' }}</div></div>
+                        <div class="corpo-item"><span>CABEÇA</span><div class="field-value">{{ personagem.cabeca or '-' }}</div></div>
+                        <div class="corpo-item"><span>PERNA E</span><div class="field-value">{{ personagem.perna_e or '-' }}</div></div>
+                        <div class="corpo-item"><span>PERNA D</span><div class="field-value">{{ personagem.perna_d or '-' }}</div></div>
+                    </div>
+                </div>
+                <div class="vital-box">
+                    <div class="section-titulo">💪 VITALIDADE</div>
+                    <div class="vital-grid">
+                        <div class="vital-item"><div class="vital-label">Força vital</div><div class="vital-valor">{{ personagem.fv_atual or personagem.forca_vital_atual }}</div><div class="vital-sub"><span>ATUAL</span><span>{{ personagem.fv_atual or personagem.forca_vital_atual }}</span></div><div class="vital-sub"><span>TOTAL</span><span>{{ personagem.fv_total or personagem.forca_vital_total or personagem.forca_vital_atual }}</span></div></div>
+                        <div class="vital-item"><div class="vital-label">Poder Elemental</div><div class="vital-valor">{{ personagem.pe_atual or personagem.poder_elemental_atual }}</div><div class="vital-sub"><span>ATUAL</span><span>{{ personagem.pe_atual or personagem.poder_elemental_atual }}</span></div><div class="vital-sub"><span>TOTAL</span><span>{{ personagem.pe_total or personagem.poder_elemental_total or personagem.poder_elemental_atual }}</span></div></div>
+                    </div>
+                    <div class="rodape-info">
+                        <div><span class="vital-label">aura</span><br><span>{{ personagem.aura_nome or '-' }}</span></div>
+                        <div><span class="vital-label">exp</span><br><span>{{ personagem.experiencia or 0 }}</span></div>
+                        <div><span class="vital-label">muny</span><br><span>{{ personagem.muny or 0 }}</span></div>
+                        <div><span class="vital-label">marca</span><br><span>{{ personagem.marca or '-' }}</span></div>
+                        <div><span class="vital-label">Favores</span><br><span>{{ personagem.favores_elementais or 0 }}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VERSO -->
+    <div id="tab-verso" class="tab-content">
+        <div class="verso-inner">
+            <div class="verso-grid">
+                <div class="verso-col">
+                    <div class="verso-card"><div class="verso-card-header">✨ QUALIDADES</div><div class="verso-card-body">{% for q in qualidades %}<div class="qualidade-item"><span>{{ q.nome }}</span><span class="qualidade-score">+{{ q.score }}</span></div>{% else %}<div class="qualidade-item"><span>Nenhuma qualidade</span><span class="qualidade-score">-</span></div>{% endfor %}</div></div>
+                    <div class="verso-card"><div class="verso-card-header">⚠️ DEFEITOS</div><div class="verso-card-body">{% for d in defeitos %}<div class="defeito-item"><span>{{ d.nome }}</span><span class="defeito-score">{{ d.score }}</span></div>{% else %}<div class="defeito-item"><span>Nenhum defeito</span><span class="defeito-score">-</span></div>{% endfor %}</div></div>
+                    <div class="verso-card"><div class="verso-card-header">🏆 TÍTULOS E ALCUNHAS</div><div class="verso-card-body">{% for t in titulos %}<div class="inventario-item">{{ t.nome }}</div>{% else %}<div class="inventario-item">Nenhum título</div>{% endfor %}</div></div>
+                </div>
+                <div class="verso-col">
+                    <div class="verso-card"><div class="verso-card-header">🎒 INVENTÁRIO</div><div class="verso-card-body">{% for i in itens %}<div class="inventario-item">{{ i.quantidade }}x {{ i.nome }}</div>{% else %}<div class="inventario-item">Inventário vazio</div>{% endfor %}</div></div>
+                    <div class="verso-card"><div class="verso-card-header">🛡️ EQUIPAMENTO</div><div class="verso-card-body"><div class="equipamento-item">Cabeça: {{ equipamento.cabeca or '-' }}</div><div class="equipamento-item">Torso: {{ equipamento.torso or '-' }}</div><div class="equipamento-item">Braços: {{ equipamento.bracos or '-' }}</div><div class="equipamento-item">Mãos: {{ equipamento.maos or '-' }}</div><div class="equipamento-item">Pernas: {{ equipamento.pernas or '-' }}</div><div class="equipamento-item">Pés: {{ equipamento.pes or '-' }}</div></div></div>
+                    <div class="verso-card"><div class="verso-card-header">🔮 ENCANTAMENTOS</div><div class="verso-card-body">{% for e in encantamentos %}<div class="inventario-item">{{ e.nome }}</div>{% else %}<div class="inventario-item">Nenhum encantamento</div>{% endfor %}</div></div>
+                    <div class="verso-card"><div class="verso-card-header">📝 ANOTAÇÕES</div><div class="verso-card-body"><div class="anotacoes-texto">{{ personagem.anotacoes or 'Nenhuma anotação.' }}</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sheet-actions">
+        <a href="{{ url_for('main.main_page') }}" class="btn btn-secondary">← Voltar</a>
+        {% if current_user.id == personagem.usuario_id or current_user.nivel_credencial >= 4 %}
+        <a href="#" class="btn btn-primary" onclick="alert('Edição em desenvolvimento'); return false;">✏️ Editar</a>
+        {% endif %}
+    </div>
+</div>
+
+{% if current_user.id == personagem.usuario_id and show_exp_button %}
+<button class="exp-button" onclick="openExpModal()">EXP</button>
+<div id="modal-exp" class="modal-exp"><div class="modal-exp-content"><div class="modal-exp-header"><h2>✨ GASTAR PONTOS DE EXPERIÊNCIA</h2><button class="modal-close" onclick="closeExpModal()">✕</button></div><div class="modal-exp-body"><div class="exp-bar-modal"><div class="exp-bar-header"><span>💰 EXPERIÊNCIA DISPONÍVEL</span><span><strong>{{ personagem.experiencia_disponivel or 0 }}</strong> / {{ personagem.experiencia_total or 0 }}</span></div><div class="bar"><div class="bar-fill" style="width: {{ ((personagem.experiencia_total or 0) - (personagem.experiencia_disponivel or 0)) / (personagem.experiencia_total or 1) * 100 }}%"></div></div><div class="exp-bar-footer"><span>📊 Gasto: {{ (personagem.experiencia_total or 0) - (personagem.experiencia_disponivel or 0) }}</span><span>✨ Restante: {{ personagem.experiencia_disponivel or 0 }}</span></div></div><div id="modal-exp-content-inner"></div></div></div></div>
+{% endif %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/parts/view_sheet.js') }}"></script>
+{% if current_user.id == personagem.usuario_id and show_exp_button %}
+<script>
+    window.showExpButton = true;
+</script>
+{% endif %}
+{% endblock %}

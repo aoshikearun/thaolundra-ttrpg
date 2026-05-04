@@ -1,0 +1,389 @@
+/* carousel-fontes.css - Carrossel de Fontes de Poder com fundo SVG animado */
+
+/* ===== MODAL PRINCIPAL ===== */
+.fontes-carousel-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.fontes-carousel-modal.active {
+    display: flex;
+}
+
+/* ===== CONTAINER DO CARROSSEL ===== */
+.fontes-carousel-container {
+    position: relative;
+    width: 90%;
+    max-width: 1300px;
+    max-height: 90vh;
+    background: rgba(20, 20, 35, 0.6);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 179, 71, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== FUNDO ANIMADO SVG ===== */
+.fontes-carousel-container .animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.fontes-carousel-container .animated-bg svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===== CABEÇALHO ===== */
+.fontes-carousel-container .fontes-modal-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+    border-bottom: 1px solid rgba(255, 179, 71, 0.2);
+}
+
+.fontes-carousel-container .fontes-modal-header h2 {
+    color: #ffb347;
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    text-shadow: 0 0 20px rgba(255, 179, 71, 0.3);
+}
+
+.fontes-carousel-container .fontes-modal-header p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin: 0;
+}
+
+.fontes-carousel-container .fontes-modal-close {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 179, 71, 0.3);
+    color: #ffb347;
+    font-size: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fontes-carousel-container .fontes-modal-close:hover {
+    background: #ffb347;
+    color: #1a1a2e;
+    transform: scale(1.05);
+}
+
+/* ===== CONTAINER DOS CARDS (SWIPER) ===== */
+.fontes-carousel-container .swiper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 50px 0 70px;
+    overflow: hidden;
+}
+
+.fontes-carousel-container .swiper-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.fontes-carousel-container .swiper-slide {
+    width: 250px;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+/* ===== CARDS DAS FONTES ===== */
+.fontes-carousel-container .fonte-card {
+    background: linear-gradient(135deg, rgba(30, 30, 46, 0.9), rgba(20, 20, 35, 0.95));
+    backdrop-filter: blur(4px);
+    border-radius: 24px;
+    padding: 24px 16px;
+    text-align: center;
+    border: 1px solid rgba(255, 179, 71, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.fontes-carousel-container .fonte-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #ffb347;
+    box-shadow: 0 20px 40px rgba(255, 179, 71, 0.2);
+}
+
+.fontes-carousel-container .fonte-card.selected {
+    border-color: #ffb347;
+    box-shadow: 0 0 30px rgba(255, 179, 71, 0.4);
+    background: linear-gradient(135deg, rgba(50, 50, 80, 0.95), rgba(30, 30, 50, 0.95));
+}
+
+/* Efeito de brilho no hover */
+.fontes-carousel-container .fonte-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, var(--glow-color, #ffb347) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.fontes-carousel-container .fonte-card:hover::before {
+    opacity: 0.15;
+}
+
+/* Ícone */
+.fontes-carousel-container .fonte-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: inline-block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.fontes-carousel-container .fonte-card:hover .fonte-icon {
+    transform: scale(1.05);
+}
+
+/* Nome */
+.fontes-carousel-container .fonte-nome {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffb347;
+    margin-bottom: 6px;
+}
+
+/* Categoria */
+.fontes-carousel-container .fonte-categoria {
+    display: inline-block;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.fontes-carousel-container .categoria-natural {
+    background: rgba(78, 205, 196, 0.2);
+    color: #4ecdc4;
+    border: 1px solid rgba(78, 205, 196, 0.3);
+}
+
+.fontes-carousel-container .categoria-artificial {
+    background: rgba(9, 132, 227, 0.2);
+    color: #0984e3;
+    border: 1px solid rgba(9, 132, 227, 0.3);
+}
+
+.fontes-carousel-container .categoria-divina {
+    background: rgba(116, 185, 255, 0.2);
+    color: #74b9ff;
+    border: 1px solid rgba(116, 185, 255, 0.3);
+}
+
+.fontes-carousel-container .categoria-mecanica {
+    background: rgba(99, 110, 114, 0.2);
+    color: #b2bec3;
+    border: 1px solid rgba(99, 110, 114, 0.3);
+}
+
+/* Descrição */
+.fontes-carousel-container .fonte-desc {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+    margin-top: 8px;
+}
+
+/* Badge Híbrida */
+.fontes-carousel-container .hybrid-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    color: #1a1a2e;
+    font-size: 9px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 20px;
+    z-index: 2;
+}
+
+/* ===== PAGINAÇÃO SWIPER ===== */
+.fontes-carousel-container .swiper-pagination {
+    position: relative;
+    bottom: 0;
+    margin-top: 20px;
+}
+
+.fontes-carousel-container .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.3);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.fontes-carousel-container .swiper-pagination-bullet-active {
+    background: #ffb347;
+    width: 24px;
+    border-radius: 10px;
+}
+
+/* ===== RODAPÉ ===== */
+.fontes-carousel-container .fontes-modal-footer {
+    position: relative;
+    z-index: 2;
+    padding: 20px 32px;
+    border-top: 1px solid rgba(255, 179, 71, 0.2);
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.fontes-carousel-container .btn {
+    padding: 10px 28px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 14px;
+}
+
+.fontes-carousel-container .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fontes-carousel-container .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.fontes-carousel-container .btn-primary {
+    background: linear-gradient(135deg, #ffb347, #ff8c42);
+    color: #1a1a2e;
+}
+
+.fontes-carousel-container .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 179, 71, 0.4);
+}
+
+/* ===== INFORMAÇÃO DE SELEÇÃO ===== */
+#fontes-carousel-selected-info {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ffb347, #ff8c42);
+    color: #1a1a2e;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: bold;
+    z-index: 10001;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(255, 179, 71, 0.3);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    .fontes-carousel-container {
+        width: 95%;
+    }
+
+    .fontes-carousel-container .fontes-modal-header {
+        padding: 16px 20px;
+    }
+
+    .fontes-carousel-container .fontes-modal-header h2 {
+        font-size: 20px;
+    }
+
+    .fontes-carousel-container .fontes-modal-header p {
+        font-size: 11px;
+    }
+
+    .fontes-carousel-container .swiper-slide {
+        width: 200px;
+    }
+
+    .fontes-carousel-container .fonte-icon {
+        font-size: 48px;
+    }
+
+    .fontes-carousel-container .fonte-nome {
+        font-size: 14px;
+    }
+
+    .fontes-carousel-container .fonte-desc {
+        font-size: 10px;
+    }
+
+    .fontes-carousel-container .btn {
+        padding: 8px 20px;
+        font-size: 12px;
+    }
+
+    #fontes-carousel-selected-info {
+        bottom: 80px;
+        font-size: 12px;
+        padding: 6px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fontes-carousel-container .swiper-slide {
+        width: 170px;
+    }
+
+    .fontes-carousel-container .fonte-icon {
+        font-size: 40px;
+    }
+
+    .fontes-carousel-container .fonte-card {
+        padding: 16px 12px;
+    }
+}
+.fontes-carousel-container {
+    transition: background 0.5s ease;
+}

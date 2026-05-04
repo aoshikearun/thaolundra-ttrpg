@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mesa-container">
+    <div class="mesa-header">
+        <h1>{{ mesa.nome if mesa else 'Mesa RPG' }}</h1>
+        <a href="{{ url_for('main.main_page') }}" class="back-btn">← Voltar</a>
+    </div>
+    
+    <div class="personagens-grid" id="personagens-grid">
+        <!-- Personagens serão carregados via JS -->
+        <div class="loading">Carregando personagens...</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/mesa.js') }}"></script>
+<script>
+// Exemplo de dados - na prática viria da API
+const personagensExemplo = [
+    {
+        id: 1,
+        nome: "Aoshi Kearun",
+        nivel: 5,
+        pv_atual: 45,
+        pv_max: 100,
+        pe_atual: 30,
+        pe_max: 80,
+        npc: false
+    },
+    {
+        id: 2,
+        nome: "Orc Guerreiro",
+        nivel: 3,
+        pv_atual: 70,
+        pv_max: 70,
+        pe_atual: 10,
+        pe_max: 20,
+        npc: true
+    }
+];
+
+// Inicializar mesa
+document.addEventListener('DOMContentLoaded', function() {
+    initMesa(personagensExemplo);
+});
+</script>
+<script src="{{ url_for('static', filename='js/mesa.js') }}"></script>
+{% endblock %}

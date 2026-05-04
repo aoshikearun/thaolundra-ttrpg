@@ -1,0 +1,359 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/atributos.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/pericias.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/tecnicas.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/progressao_exp.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/criar-stepper.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/carousel-species.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/carousel-fontes.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/view_sheet.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="criar-ficha-container">
+    <div class="ficha-header">
+        <h1>📝 Criar Nova Ficha</h1>
+        <p class="user-info">Jogador: {{ user.username }}</p>
+    </div>
+
+    <div class="stepper-wrapper"></div>
+
+    <div class="ficha-content">
+        <!-- PASSO 1: CATEGORIA -->
+        <div id="step-1" class="ficha-step" style="display: block;">
+            <h2>📊 Escolha a Categoria da Ficha</h2>
+            <p class="step-description">A categoria define as regras e limites do seu personagem.</p>
+
+            <div class="categorias-grid">
+                <div class="categoria-card" data-categoria-id="1" data-categoria-nome="padrao">
+                    <div class="categoria-icon">⭐</div>
+                    <h3>Ficha Padrão</h3>
+                    <p>Não pode raças avançadas ou fontes híbridas. Transferência de pontos permitida. Limites: Combate 2, Ofício 2, Conhecimento 3. 1 técnica avançada. EXP inicial: 500.</p>
+                </div>
+                <div class="categoria-card" data-categoria-id="2" data-categoria-nome="epica">
+                    <div class="categoria-icon">⚡</div>
+                    <h3>Ficha Épica</h3>
+                    <p>Não pode raças avançadas, permite fontes híbridas. Poder +50. Limites: Combate 3, Ofício 2, Conhecimento 3. 3 técnicas avançadas ou 1 última. EXP: 2500. FV/PE +200.</p>
+                </div>
+                <div class="categoria-card" data-categoria-id="3" data-categoria-nome="especial">
+                    <div class="categoria-icon">🔮</div>
+                    <h3>Ficha Especial</h3>
+                    <p>Permite Mecha e fontes híbridas. Limites: Combate 2, Ofício 2, Conhecimento 3. 1 técnica avançada. EXP: 500.</p>
+                </div>
+                <div class="categoria-card" data-categoria-id="4" data-categoria-nome="rokan">
+                    <div class="categoria-icon">🗡️</div>
+                    <h3>Ficha Rokan</h3>
+                    <p>Apenas Rokan. +5 pontos livre nos atributos. Poder 2d100. Não transfere pontos. Limites: Combate 2, Ofício 2, Conhecimento 5. 1 inata aleatória gasta 10 pontos. EXP: 1500. PE +200.</p>
+                </div>
+                <div class="categoria-card" data-categoria-id="5" data-categoria-nome="divina">
+                    <div class="categoria-icon">✨</div>
+                    <h3>Ficha Divina</h3>
+                    <p>Apenas Demônio/Anjo. +10 pontos livre nos atributos. Poder 4d100. Não transfere pontos. Limites: Combate 5, Ofício 3, Conhecimento 5. EXP: 5000. FV/PE +1000.</p>
+                </div>
+                <div class="categoria-card" data-categoria-id="6" data-categoria-nome="pura">
+                    <div class="categoria-icon">🌀</div>
+                    <h3>Ficha Pura</h3>
+                    <p>Apenas Yun-hai/Kyongun, fonte Pura. +10 pontos livre nos atributos. Poder fixo 1. Sem perícias, 1 inata com 10 pontos grátis. EXP: 1500 + conversão.</p>
+                </div>
+            </div>
+
+            <input type="hidden" id="categoria_personagem" value="">
+
+            <div class="step-actions">
+                <button class="btn-next" id="btn-next-categoria" disabled onclick="nextStep(2)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 2: ESPÉCIE -->
+        <div id="step-2" class="ficha-step" style="display: none;">
+            <h2>🐉 Escolha sua Espécie</h2>
+            <p class="step-description">Cada espécie possui características únicas que definirão seu personagem.</p>
+
+            <div class="species-selector">
+                <input type="hidden" id="especie" name="especie" value="">
+                <button type="button" class="btn btn-secondary" id="open-species-modal">
+                    <span id="selected-species-name">Selecione uma Espécie</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+
+            <div id="especie-info" class="info-box" style="display: none;">
+                <h4>📖 Informações da Espécie</h4>
+                <p id="especie-desc"></p>
+                <div class="info-grid">
+                    <div><strong>⚡ Poder Mínimo:</strong> <span id="especie-min">-</span></div>
+                    <div><strong>⚡ Poder Máximo:</strong> <span id="especie-max">-</span></div>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevStep()">← Anterior</button>
+                <button class="btn-next" onclick="nextStep(3)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 3: FONTE DE PODER -->
+        <div id="step-3" class="ficha-step" style="display: none;">
+            <h2>🔮 Escolha sua Fonte de Poder</h2>
+            <p class="step-description">Cada fonte concede habilidades únicas e define a origem do seu poder elemental.</p>
+
+            <div class="fonte-poder-container">
+                <input type="hidden" id="fonte_poder" name="fonte_poder" value="">
+                <button type="button" class="btn btn-secondary" id="open-fontes-modal" onclick="openFontesCarouselModal()">
+                    <span id="selected-fonte-name">Selecione uma Fonte de Poder</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+
+                <div id="fontes-grid" class="fontes-grid" style="display: none;">
+                    <div class="loading">Carregando fontes de poder...</div>
+                </div>
+
+                <div id="fonte-info" class="info-box" style="display: none;">
+                    <h4>📖 Informações da Fonte</h4>
+                    <p id="fonte-desc"></p>
+                    <p><strong>Categoria:</strong> <span id="fonte-categoria"></span></p>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevStep()">← Anterior</button>
+                <button class="btn-next" onclick="nextStep(4)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 4: ATRIBUTOS -->
+        <div id="step-4" class="ficha-step" style="display: none;">
+            <h2>⚡ Atributos</h2>
+            <p class="step-description">Você tem 3 tentativas. Cada tentativa gera 4 valores (Força, Destreza, Inteligência, Constituição).</p>
+
+            <div class="rolagem-section">
+                <h3>🎲 Rolagem de Atributos (4d10 descarta menor)</h3>
+                <div id="atributos-rolagem-container">
+                    <!-- Tentativas 1, 2, 3 -->
+                    <div id="tentativa-1" class="tentativa-ativa">
+                        <h4>Tentativa 1</h4>
+                        <div class="atributos-rolagem">
+                            <div class="atributo-linha" data-atributo="forca"><div class="dados-container"></div><span class="resultado"></span></div>
+                            <div class="atributo-linha" data-atributo="destreza"><div class="dados-container"></div><span class="resultado"></span></div>
+                            <div class="atributo-linha" data-atributo="inteligencia"><div class="dados-container"></div><span class="resultado"></span></div>
+                            <div class="atributo-linha" data-atributo="constituicao"><div class="dados-container"></div><span class="resultado"></span></div>
+                        </div>
+                        <div class="tentativa-acoes"><button class="btn-rolar" onclick="rolarAtributos(1)">🎲 Rolar Tentativa 1</button></div>
+                    </div>
+                    <div id="tentativa-2" class="tentativa-oculta" style="display: none;"><!-- similar --></div>
+                    <div id="tentativa-3" class="tentativa-oculta" style="display: none;"><!-- similar --></div>
+                </div>
+            </div>
+
+            <div class="distribuicao-section" style="display: none;">
+                <h3>🎯 Distribuir Atributos</h3>
+                <p class="step-description">Arraste os números entre os cards para trocar. Use + e - para ajustar.</p>
+                <div class="atributos-slots">
+                    <div class="atributo-slot" data-atributo="forca">
+                        <div class="slot-header"><span class="slot-icon">💪</span><span class="slot-nome">Força</span></div>
+                        <div class="valor-container"><button class="btn-controle btn-card-menos">−</button><div class="valor-numero card-number">1</div><button class="btn-controle btn-card-mais">+</button></div>
+                        <div class="pontos-extras">⊕ 0 disponíveis</div>
+                    </div>
+                    <div class="atributo-slot" data-atributo="destreza"><!-- similar --></div>
+                    <div class="atributo-slot" data-atributo="inteligencia"><!-- similar --></div>
+                    <div class="atributo-slot" data-atributo="constituicao"><!-- similar --></div>
+                </div>
+                <div class="atributos-acoes">
+                    <div class="confirmar-wrapper">
+                        <button id="resetar-atributos" class="btn-resetar-atributos" style="display: none;">🔄 Resetar</button>
+                        <button id="confirmar-atributos" class="btn-confirmar-atributos" style="display: none;">✅ Confirmar Atributos</button>
+                        <div id="confirmar-notificacao" class="confirmar-notificacao"><span class="notificacao-icon">⚠️</span><span class="notificacao-mensagem"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rolagem-section" style="display: none;" id="poder-section">
+                <h3>✨ Rolagem de Poder</h3>
+                <div id="poder-rolagem-container">
+                    <div id="poder-tentativa-1" class="poder-tentativa-ativa"><h4>Tentativa 1</h4><div class="resultado-poder" id="poder-1">-</div><button class="btn-rolar" onclick="rolarPoder(1)">🎲 Rolar Poder</button></div>
+                    <div id="poder-tentativa-2" class="poder-tentativa-oculta" style="display: none;"><!-- similar --></div>
+                    <div id="poder-tentativa-3" class="poder-tentativa-oculta" style="display: none;"><!-- similar --></div>
+                </div>
+                <div class="info-box"><p>Limites da espécie: <span id="limite-poder">1-100</span></p><p id="categoria-poder-info" class="text-muted"></p></div>
+            </div>
+
+            <div class="rolagem-section" style="display: none;" id="aparencia-section">
+                <h3>👤 Rolagem de Aparência (1d20)</h3>
+                <div class="rolagem-aparencia"><div class="resultado-aparencia" id="aparencia-result">-</div><button class="btn-rolar" onclick="rolarAparencia()">🎲 Rolar Aparência</button></div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevStep()">← Anterior</button>
+                <button class="btn-next" onclick="nextStep(5)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 5: PERÍCIAS -->
+        <div id="step-5" class="ficha-step" style="display: none;">
+            <h2>🎯 Perícias</h2>
+            <p class="step-description">Selecione as perícias do seu personagem e distribua os pontos.</p>
+
+            <div id="fase1-pericias" class="fase-selecao">
+                <div class="fase-header"><h3>📋 Fase 1: Selecionar Perícias</h3>
+                    <div class="limites-info">
+                        <span class="limite-badge combate">⚔️ Combate: 0/<span id="limite-combate">2</span></span>
+                        <span class="limite-badge oficio">🔧 Ofício: 0/<span id="limite-oficio">2</span></span>
+                        <span class="limite-badge conhecimento">🔬 Conhecimento: 0/<span id="limite-conhecimento">3</span></span>
+                        <span class="limite-badge vontade">🧠 Vontade: 0/1</span>
+                    </div>
+                </div>
+                <div id="pericias-container" class="pericias-grid"></div>
+                <div class="fase-actions"><button class="btn-next-fase" onclick="avancarFasePericias()">Continuar para Distribuição →</button></div>
+            </div>
+
+            <div id="fase2-pericias" class="fase-distribuicao" style="display: none;">
+                <h3>⚡ Fase 2: Distribuir Pontos</h3>
+                <div class="resumo-pontos">
+                    <div class="pontos-disponiveis">📊 Pontos disponíveis: <span id="pontos-pericias-disponiveis">0</span></div>
+                    <div class="barra-pontos"><div class="barra-pontos-fill" id="barra-pontos-fill" style="width: 0%"></div></div>
+                    <div class="pontos-usados">Usados: <span id="pontos-usados">0</span></div>
+                </div>
+                <div id="pericias-selecionadas-container" class="pericias-selecionadas"></div>
+                <div class="fase-actions">
+                    <button class="btn-prev-fase" onclick="voltarFasePericias()">← Voltar para Seleção</button>
+                    <button class="btn-next" onclick="confirmarPericias()">Confirmar Perícias →</button>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevStep()">← Anterior</button>
+                <button class="btn-next" onclick="nextStep(6)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 6: TÉCNICAS -->
+        <div id="step-6" class="ficha-step" style="display: none;">
+            <h2>✨ Técnicas</h2>
+            <p class="step-description">Selecione as técnicas baseadas na sua Fonte de Poder.</p>
+
+            <div id="fase1-tecnicas" class="fase-tecnicas" style="display: none;">
+                <div class="fase-header"><h3>🧬 Fase 1: Escolha sua Técnica Inata</h3><p class="fase-desc">Você deve escolher exatamente 1 técnica inata.</p></div>
+                <div id="tecnicas-inatas-container" class="tecnicas-grid"></div>
+                <div class="fase-actions">
+                    <button class="btn-prev-fase" onclick="voltarFaseTecnicas(1)">← Voltar</button>
+                    <button class="btn-next-fase" id="btn-confirmar-inata" disabled onclick="confirmarInata()">Confirmar Inata →</button>
+                </div>
+            </div>
+
+            <div id="fase2-tecnicas" class="fase-tecnicas" style="display: none;">
+                <div class="fase-header"><h3>📚 Fase 2: Escolha outras técnicas</h3><p class="fase-desc">Básicas (sem limite) | Avançadas (máximo <span id="tecnicas-avancadas-max">1</span>)</p>
+                    <div class="tecnicas-limites"><span class="limite-badge avancada">⚡ Avançada: 0/<span id="avancada-max">1</span></span></div>
+                </div>
+                <div class="tecnicas-categoria"><h4>📘 Técnicas Básicas</h4><div id="tecnicas-basicas-container" class="tecnicas-grid"></div></div>
+                <div class="tecnicas-categoria"><h4>⚡ Técnicas Avançadas</h4><div id="tecnicas-avancadas-container" class="tecnicas-grid"></div></div>
+                <div class="tecnicas-categoria" id="tecnicas-ultimas-section" style="display: none;"><h4>🌟 Técnicas Últimas</h4><div id="tecnicas-ultimas-container" class="tecnicas-grid"></div></div>
+                <div class="tecnicas-limites"><span class="limite-badge avancada">⚡ Avançada: 0/<span id="avancada-max">1</span></span><span class="limite-badge ultima" id="ultima-badge" style="display: none;">🌟 Última: 0/<span id="ultima-max">0</span></span></div>
+                <div class="fase-actions"><button class="btn-prev-fase" onclick="voltarFaseTecnicas(2)">← Voltar</button><button class="btn-next-fase" id="btn-continuar-tecnicas" disabled onclick="irParaDistribuicaoTecnicas()">Continuar →</button></div>
+            </div>
+
+            <div id="fase3-tecnicas" class="fase-tecnicas" style="display: none;">
+                <h3>⚡ Fase 3: Distribuir Pontos</h3>
+                <div class="resumo-pontos">
+                    <div class="pontos-disponiveis">📊 Pontos disponíveis: <span id="pontos-tecnicas-disponiveis">0</span></div>
+                    <div class="barra-pontos"><div class="barra-pontos-fill" id="barra-pontos-tecnicas-fill" style="width: 0%"></div></div>
+                    <div class="pontos-usados">Usados: <span id="pontos-usados-tecnicas">0</span></div>
+                </div>
+                <div id="tecnicas-selecionadas-container" class="tecnicas-selecionadas"></div>
+                <div class="fase-actions"><button class="btn-prev-fase" onclick="voltarFaseTecnicas(3)">← Voltar</button><button class="btn-next" onclick="confirmarTecnicas()">Confirmar Técnicas →</button></div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevStep()">← Anterior</button>
+                <button class="btn-next" onclick="nextStep(7)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 7: SOCIAIS -->
+        <div id="step-7" class="ficha-step" style="display: none;">
+            <h2>👥 Informações Sociais</h2>
+            <p class="step-description">Defina as qualidades, defeitos e informações sociais do personagem.</p>
+
+            <div class="form-section">
+                <h3>⚖️ Qualidades e Defeitos</h3>
+                <p class="step-description">Qualidades: +1 score = -100 EXP | Defeitos: -1 score = +100 EXP. Limite: 5 de cada.</p>
+                <div class="qualidades-defeitos-grid">
+                    <div><h4>✨ Qualidades <span id="qualidades-count">0</span>/5</h4><div id="qualidades-lista" class="caracteristicas-lista"></div><button type="button" class="btn-add" onclick="abrirModalCaracteristica('Qualidade')">+ Adicionar Qualidade</button></div>
+                    <div><h4>⚠️ Defeitos <span id="defeitos-count">0</span>/5</h4><div id="defeitos-lista" class="caracteristicas-lista"></div><button type="button" class="btn-add" onclick="abrirModalCaracteristica('Defeito')">+ Adicionar Defeito</button></div>
+                </div>
+                <div class="score-preview"><span>🏆 Score total: <strong id="score-total">0</strong></span><span>💰 Bônus de EXP: <strong id="exp-bonus">0</strong></span></div>
+            </div>
+
+            <div class="form-section"><h3>📜 Outras Características</h3><div id="outras-lista" class="caracteristicas-lista"></div><button type="button" class="btn-add" onclick="abrirModalCaracteristica('Outras')">+ Adicionar Característica</button></div>
+
+            <div class="form-section">
+                <h3>📍 Localização e Vínculos</h3>
+                <div class="form-grid">
+                    <div class="form-group"><label for="ocupacao">Ocupação</label><input type="text" id="ocupacao" placeholder="Ex: Mercador, Guerreiro, Estudante"></div>
+                    <div class="form-group"><label for="moradia">Moradia</label><input type="text" id="moradia" placeholder="Ex: Cidade de Eldoria, Aldeia do Lago"></div>
+                    <div class="form-group"><label for="faccao">Facção</label><div class="select-with-btn"><select id="faccao"><option value="0">Nenhuma facção</option></select><button type="button" class="btn-small" onclick="abrirModalCriarFaccao()">+ Nova</button></div></div>
+                    <div class="form-group"><label for="aura">Aura</label><div class="select-with-btn"><select id="aura"><option value="">Selecione uma aura...</option></select><button type="button" class="btn-small" onclick="abrirModalCriarAura()">+ Nova</button></div></div>
+                    <div class="form-group"><label for="npc">Tipo de Personagem</label><select id="npc"><option value="false">Personagem de Jogador (PC)</option><option value="true">Personagem Não-Jogador (NPC)</option></select></div>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-prev" onclick="prevStep()">← Anterior</button>
+                <button class="btn-next" onclick="nextStep(8)">Próximo →</button>
+            </div>
+        </div>
+
+        <!-- PASSO 8: FINALIZAÇÃO -->
+        <div id="step-8" class="ficha-step" style="display: none;">
+            <div class="sheet-container">
+                <div class="tabs"><button class="tab-btn active" data-tab="frente">📜 FRENTE</button><button class="tab-btn" data-tab="verso">📖 VERSO</button></div>
+                <div id="tab-frente" class="tab-content active"><div class="ficha-inner"><div id="passo8-frente-conteudo"></div></div></div>
+                <div id="tab-verso" class="tab-content"><div class="verso-inner"><div id="passo8-verso-conteudo"></div></div></div>
+            </div>
+            <div class="step-actions"><button class="btn-prev" onclick="prevStep()">← Anterior</button><button class="btn-next" onclick="nextStep(9)">Próximo →</button></div>
+        </div>
+
+        <!-- PASSO 9: PUBLICAÇÃO -->
+        <div id="step-9" class="ficha-step" style="display: none;">
+            <h2>🚀 Publicar Personagem</h2>
+            <p class="step-description">Dê um nome ao seu personagem e publique-o no mundo de Thaolundra.</p>
+            <div class="publicacao-card">
+                <div class="nome-container"><label for="nome_completo">Nome do Personagem</label><input type="text" id="nome_completo" placeholder="Ex: Aerion Valefar"></div>
+                <div class="privado-container"><label><input type="checkbox" id="privado"><i class="fas fa-lock"></i><span>Privado</span><small>(Personagens privados não aparecem na galeria pública)</small></label></div>
+                <div class="publicacao-aviso"><i class="fas fa-info-circle"></i><span>Após a criação, você poderá editar seu personagem a qualquer momento.</span></div>
+            </div>
+            <div class="final-actions"><button class="btn-prev" onclick="prevStep()">← Voltar e revisar</button><button class="btn-save" onclick="salvarFicha()">💾 Criar Personagem</button></div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAIS -->
+<div id="modal-faccao" class="modal" style="display: none;"><!-- conteúdo --></div>
+<div id="modal-aura" class="modal" style="display: none;"><!-- conteúdo --></div>
+<div id="modal-luta-com" class="modal" style="display: none;"><!-- conteúdo --></div>
+<div id="modal-caracteristica" class="modal" style="display: none;"><!-- conteúdo --></div>
+
+{% include 'effects/carousel-species.html' %}
+{% include 'effects/carousel-fontes.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.currentUser = {
+        username: "{{ user.username }}"
+    };
+</script>
+<script src="{{ url_for('static', filename='js/parts/carousel-species.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/carousel-fontes.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criar-stepper.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/progressao_exp.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_ficha.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_categorias.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_fundamental.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_atributos.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_pericias.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_tecnicas.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/criacao/criar_final.js') }}"></script>
+{% endblock %}

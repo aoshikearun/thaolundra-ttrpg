@@ -1,0 +1,603 @@
+/* ============================================ */
+/* PROGRESSAO_EXP.CSS - Estilos para Gastos de Experiência */
+/* ============================================ */
+
+.exp-container {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* ============================================ */
+/* 1. BARRA DE PROGRESSO */
+/* ============================================ */
+
+.exp-bar-container {
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.exp-bar-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.exp-bar-label span:first-child {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.exp-values {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.exp-bar {
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    height: 24px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.exp-bar-fill {
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    width: 0%;
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.exp-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.exp-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ============================================ */
+/* 2. GRID PRINCIPAL */
+/* ============================================ */
+
+.exp-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+    .exp-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================ */
+/* 3. ATRIBUTOS - 2x2 GRID */
+/* ============================================ */
+
+.atributos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 480px) {
+    .atributos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================ */
+/* 4. FV/PE - 2x1 GRID */
+/* ============================================ */
+
+.fv-pe-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+/* ============================================ */
+/* 5. CARDS BASE */
+/* ============================================ */
+
+.exp-card {
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.exp-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border-color: var(--primary);
+}
+
+.card-header {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.card-valor {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    line-height: 1;
+    margin: 8px 0;
+}
+
+.card-base {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.card-base .modificador {
+    color: var(--success);
+}
+
+.card-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.card-botoes button {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+
+.card-botoes button:hover:not(:disabled) {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.card-botoes button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-menos {
+    background: var(--danger-bg) !important;
+    color: var(--danger) !important;
+}
+
+.btn-menos:hover:not(:disabled) {
+    background: var(--danger) !important;
+    color: #fff !important;
+}
+
+.card-custo {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.card-custo[style*="danger"] {
+    background: var(--danger-bg);
+}
+
+.card-custo[style*="success"] {
+    background: var(--success-bg);
+}
+
+/* ============================================ */
+/* 6. LISTAS DE TÉCNICAS E PERÍCIAS */
+/* ============================================ */
+
+.exp-listas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+    .exp-listas {
+        grid-template-columns: 1fr;
+    }
+}
+
+.exp-tecnicas h3,
+.exp-pericias h3 {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 1rem;
+}
+
+.tecnicas-list,
+.pericias-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.tecnicas-list::-webkit-scrollbar,
+.pericias-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tecnicas-list::-webkit-scrollbar-track,
+.pericias-list::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+.tecnicas-list::-webkit-scrollbar-thumb,
+.pericias-list::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+.empty-list {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+}
+
+/* ============================================ */
+/* 7. ITENS DAS LISTAS */
+/* ============================================ */
+
+.exp-item {
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.exp-item:hover {
+    background: var(--bg-hover);
+}
+
+.item-info {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.item-nome {
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.item-valor {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.item-base {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.item-botoes {
+    display: flex;
+    gap: 6px;
+}
+
+.item-botoes button {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 4px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: all 0.2s;
+}
+
+.item-botoes button:hover:not(:disabled) {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.item-botoes button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.item-custo {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--bg-secondary);
+}
+
+/* ============================================ */
+/* 8. AÇÕES RODAPÉ */
+/* ============================================ */
+
+.exp-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    margin-top: 8px;
+}
+
+.btn-reset-exp {
+    background: transparent;
+    border: 1px solid var(--warning);
+    color: var(--warning);
+    padding: 10px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-reset-exp:hover {
+    background: var(--warning-bg);
+    transform: scale(1.02);
+}
+
+.btn-confirm-exp {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    border: none;
+    color: #000;
+    padding: 10px 32px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-confirm-exp:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* ============================================ */
+/* 9. TÍTULOS DAS SEÇÕES */
+/* ============================================ */
+
+.exp-atributos h3,
+.exp-fv-pe h3,
+.exp-tecnicas h3,
+.exp-pericias h3 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.exp-atributos h3::before {
+    content: '🎯';
+}
+
+.exp-fv-pe h3::before {
+    content: '⚡';
+}
+
+.exp-tecnicas h3::before {
+    content: '✨';
+}
+
+.exp-pericias h3::before {
+    content: '📚';
+}
+/* ============================================ */
+/* FICHA EXP - PASSO 8 COMPLETO */
+/* ============================================ */
+
+.ficha-exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+@media (max-width: 900px) {
+    .ficha-exp-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ficha-exp-coluna-esquerda,
+.ficha-exp-coluna-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ficha-exp-card {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.ficha-exp-card-header {
+    background: var(--bg-secondary);
+    padding: 12px 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.ficha-exp-card-header span {
+    font-size: 0.9rem;
+    color: var(--primary);
+}
+
+.ficha-exp-atributos-metrics,
+.ficha-exp-combat-metrics,
+.ficha-exp-poder-metrics,
+.ficha-exp-testes-metrics {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.metric-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.metric-item:last-child {
+    border-bottom: none;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-width: 100px;
+}
+
+.metric-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary);
+    min-width: 50px;
+    text-align: center;
+}
+
+.metric-base {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.metric-info {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.ficha-exp-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0 16px;
+}
+
+.exp-btn-group {
+    display: flex;
+    gap: 4px;
+}
+
+.exp-btn-plus,
+.exp-btn-plus10 {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--success);
+    padding: 2px 10px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: all 0.2s;
+}
+
+.exp-btn-plus:hover,
+.exp-btn-plus10:hover {
+    background: var(--success);
+    color: #000;
+    border-color: var(--success);
+}
+
+.ficha-exp-lista {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.ficha-exp-lista .exp-item {
+    margin-bottom: 8px;
+}
+
+.exp-btn-toggle {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.qualidades-resumo {
+    margin-top: 20px;
+}
+
+.qualidades-defeitos-exp {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.qualidades-exp,
+.defeitos-exp,
+.score-exp {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.exp-bonus-info {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
