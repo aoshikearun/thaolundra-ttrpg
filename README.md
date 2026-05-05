@@ -1,11 +1,14 @@
-# Thaolundra TTRPG - Plataforma de RPG
+#  Thaolundra TTRPG
+### Plataforma de RPG
+
+
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![Flask](https://img.shields.io/badge/Flask-3.0-green)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-orange)
 ![License](https://img.shields.io/badge/License-Private-red)
 
-## 📖 Sobre o Projeto
+# 📖 Sobre o Projeto
 
 Thaolundra é uma plataforma web para facilitar e registrar sessões do RPG de mesa **Thaolundra**. O sistema permite:
 
@@ -16,7 +19,7 @@ Thaolundra é uma plataforma web para facilitar e registrar sessões do RPG de m
 - 👑 **Gestão de usuários com níveis hierárquicos** - 6 níveis de permissão
 - 📚 **Gerenciamento de conteúdo** - Espécies, perícias, técnicas, fontes de poder
 
-## 🛠️ Tecnologias Utilizadas
+# 🛠️ Tecnologias Utilizadas
 
 | Tecnologia | Versão | Finalidade |
 |------------|--------|------------|
@@ -30,7 +33,7 @@ Thaolundra é uma plataforma web para facilitar e registrar sessões do RPG de m
 | Swiper.js | - | Carrosséis 3D |
 | GSAP | - | Animações SVG |
 
-## 🎮 Hierarquia de Usuários
+# 🎮 Hierarquia de Usuários
 
 | Nível | Nome | Permissões |
 |:-----:|:-----:|:-----------|
@@ -41,7 +44,7 @@ Thaolundra é uma plataforma web para facilitar e registrar sessões do RPG de m
 | 4 | Moderador | Gerenciar conteúdo, usuários básico |
 | 5 | Administrador | Acesso total, excluir conteúdo |
 
-## 📁 Estrutura do Projeto
+# 📁 Estrutura do Projeto
 
 Thaolundra/
 ├── app.py
@@ -79,39 +82,40 @@ Thaolundra/
     ├── css/
     └── js/
 
-## 🚀 Instalação e Configuração
+# 🚀 Instalação e Configuração
 
-### Pré-requisitos
+## Pré-requisitos
 
 - Python 3.10 ou superior
 - MySQL/MariaDB instalado
 - Git (opcional)
 
-### Passo a passo
+## Passo a passo
 
-1. Clone o repositório
-git clone https://github.com/seu-usuario/thaolundra-ttrpg.git
-cd thaolundra-ttrpg
+### 1. Clone o repositório
+`git clone https://github.com/seu-usuario/thaolundra-ttrpg.git
+cd thaolundra-ttrpg`
 
-2. Crie um ambiente virtual
-python -m venv venv
+### 2. Crie um ambiente virtual
+`python -m venv venv
 source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
+venv\Scripts\activate     # Windows`
 
-3. Instale as dependências
-pip install -r requirements.txt
+### 3. Instale as dependências
+`pip install -r requirements.txt
+`
+### 4. Configure o banco de dados
+`CREATE DATABASE thaolundra_rpg CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+`
+### 5. Configure a conexão - Edite o arquivo database.py com suas credenciais:
 
-4. Configure o banco de dados
-CREATE DATABASE thaolundra_rpg CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-5. Configure a conexão - Edite o arquivo database.py com suas credenciais:
-DB_CONFIG = {
+`DB_CONFIG = {
     'host': 'localhost',
     'database': 'thaolundra_rpg',
     'user': 'seu_usuario',
     'password': 'sua_senha',
     'port': 3306
-}
+}`
 
 6. Execute a aplicação
 python app.py
@@ -127,12 +131,6 @@ O sistema utiliza tabelas de custo progressivo para:
 - Técnicas (Inatas, Básicas, Avançadas, Últimas)
 - Força Vital (FV) e Poder Elemental (PE)
 
-### Fórmulas de Cálculo
-
-pontos_pericias = ((inteligencia + (destreza / 2) + (poder / 20)) / 2) * 5 * 3
-pontos_tecnicas = poder * 2
-forca_vital = ((forca + constituicao) / 2) * 5 * 2
-poder_elemental = ((inteligencia + (destreza / 2) + (poder / 20)) / 2) * 5 * 2
 
 ## 🐛 Debug e Logs
 
@@ -143,10 +141,6 @@ poder_elemental = ((inteligencia + (destreza / 2) + (poder / 20)) / 2) * 5 * 2
 ## 📄 Licença
 
 Este projeto é privado e de uso exclusivo para o sistema Thaolundra RPG.
-
-## 👥 Contribuidores
-
-- Desenvolvedor principal
 
 ## 📞 Contato
 
