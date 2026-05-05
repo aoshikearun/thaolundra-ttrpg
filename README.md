@@ -12,12 +12,12 @@
 
 Thaolundra é uma plataforma web para facilitar e registrar sessões do RPG de mesa **Thaolundra**. O sistema permite:
 
-- 📝 **Criação e gestão de fichas de personagem** - Wizard completo com 9 passos
-- 🎲 **Sistema de rolagem de atributos e poder** - Rolagem de 4d10 descartando o menor
-- 📊 **Progressão de personagens com sistema de EXP** - Tabelas de custo progressivo
-- 🎭 **Sistema de mesas multijogador** - Janelas flutuantes arrastáveis
-- 👑 **Gestão de usuários com níveis hierárquicos** - 6 níveis de permissão
-- 📚 **Gerenciamento de conteúdo** - Espécies, perícias, técnicas, fontes de poder
+- 📝 **Criação e gestão de fichas de personagem** 
+- 🎲 **Sistema de rolagem de atributos** 
+- 📊 **Progressão de personagens com sistema de EXP**
+- 🎭 **Sistema de mesas multijogador**
+- 👑 **Gestão de usuários com níveis hierárquicos**
+- 📚 **Gerenciamento de conteúdo**
 
 # 🛠️ Tecnologias Utilizadas
 
@@ -46,7 +46,7 @@ Thaolundra é uma plataforma web para facilitar e registrar sessões do RPG de m
 
 # 📁 Estrutura do Projeto
 
-Thaolundra/
+`Thaolundra/
 ├── app.py
 ├── database.py
 ├── requirements.txt
@@ -80,7 +80,7 @@ Thaolundra/
 │       └── 500.html
 └── static/
     ├── css/
-    └── js/
+    └── js/`
 
 # 🚀 Instalação e Configuração
 
@@ -88,7 +88,6 @@ Thaolundra/
 
 - Python 3.10 ou superior
 - MySQL/MariaDB instalado
-- Git (opcional)
 
 ## Passo a passo
 
@@ -118,7 +117,7 @@ venv\Scripts\activate     # Windows`
 }`
 
 6. Execute a aplicação
-python app.py
+`python app.py`
 
 7. Acesse http://localhost:8000
 
