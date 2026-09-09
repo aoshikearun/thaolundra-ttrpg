@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>401 - Não Autorizado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas class="fog-animation" id="fogCanvas"></canvas>
+
+    <div class="error-container">
+        <div class="error-content">
+            <h1><i class="fas fa-user-lock"></i> 401</h1>
+            <h2>Não Autorizado</h2>
+
+            <div class="error-quote">
+                <p><i class="fas fa-quote-left"></i> Mas ainda há a questão persistente das testemunhas. Admito que tenho uma fascinação por aqueles que se adaptam e sobrevivem contra todas as probabilidades. <i class="fas fa-quote-right"></i></p>
+                <p class="quote-author">— G-Man</p>
+            </div>
+
+            <div class="error-description">
+                <p><i class="fas fa-exclamation-circle"></i> {{ description }}</p>
+            </div>
+
+            <div class="error-actions">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Fazer Login
+                </a>
+                <a href="{{ url_for('main.main_page') }}" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Página Principal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/403.js') }}"></script>
+</body>
+</html>

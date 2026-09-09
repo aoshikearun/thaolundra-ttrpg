@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/mesa.css') }}">
+{% endblock %}
+
+{% block title %}{{ mesa.nome if mesa else 'Mesa RPG' }} - Thaolundra{% endblock %}
+
+{% block content %}
+<div id="mesa-container" class="mesa-container">
+    <!-- Fundo -->
+    <div class="mesa-background"></div>
+
+    <!-- Barra de Ferramentas -->
+    <div id="toolbar" class="toolbar" style="left: auto; right: 20px; top: 100px;">
+        <div class="toolbar-handle">⠿</div>
+        <button class="tool-btn" data-window="personagem" title="Meu Personagem">🧙</button>
+        <button class="tool-btn" data-window="acao" title="Ações">⚔️</button>
+        <button class="tool-btn" data-window="grupo" title="Grupo">👥</button>
+        <button class="tool-btn" data-window="interacoes" title="Interações">💬</button>
+    </div>
+
+    <!-- Janela: Meu Personagem -->
+    <div id="window-personagem" class="floating-window" data-window="personagem" style="top: 100px; left: 20px; width: 320px;">
+        <div class="window-header">
+            <span>🧙 Meu Personagem</span>
+            <button class="window-close">✕</button>
+        </div>
+        <div class="window-body">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>
+        </div>
+    </div>
+
+    <!-- Janela: Ações -->
+    <div id="window-acao" class="floating-window" data-window="acao" style="top: 100px; left: 360px; width: 300px;">
+        <div class="window-header">
+            <span>⚔️ Ações</span>
+            <button class="window-close">✕</button>
+        </div>
+        <div class="window-body">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>
+        </div>
+    </div>
+
+    <!-- Janela: Grupo -->
+    <div id="window-grupo" class="floating-window" data-window="grupo" style="top: 100px; right: 80px; width: 280px;">
+        <div class="window-header">
+            <span>👥 Grupo</span>
+            <button class="window-close">✕</button>
+        </div>
+        <div class="window-body">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>
+        </div>
+    </div>
+
+    <!-- Janela: Interações -->
+    <div id="window-interacoes" class="floating-window" data-window="interacoes" style="bottom: 20px; left: 20px; width: 280px;">
+        <div class="window-header">
+            <span>💬 Interações</span>
+            <button class="window-close">✕</button>
+        </div>
+        <div class="window-body">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando...</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.currentMesaId = {{ mesa.id }};
+</script>
+<script src="{{ url_for('static', filename='js/parts/mesa.js') }}"></script>
+{% endblock %}

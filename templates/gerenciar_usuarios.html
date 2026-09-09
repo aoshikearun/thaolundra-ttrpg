@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/usuarios.css') }}">
+{% endblock %}
+
+{% block title %}Gerenciar Usuários - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="usuarios-container">
+
+    <!-- HEADER -->
+    <div class="usuarios-header">
+        <h1>👥 Gerenciar Usuários</h1>
+        <span class="badge-count" id="total-usuarios">Carregando...</span>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="filtros-bar">
+        <input type="text" id="filtro-usuarios" placeholder="🔍 Buscar por nome ou email..." class="search-input">
+        <select id="filtro-nivel" class="filter-select">
+            <option value="">Todos os níveis</option>
+            <option value="0">Espectador</option>
+            <option value="1">Jogador</option>
+            <option value="2">Veterano</option>
+            <option value="3">Parceiro</option>
+            <option value="4">VIP</option>
+            <option value="5">Narrador</option>
+            <option value="6">Guardião</option>
+            <option value="7">Moderador</option>
+            <option value="8">Desenvolvedor</option>
+            <option value="9">Administrador</option>
+        </select>
+        <select id="filtro-status" class="filter-select">
+            <option value="">Todos os status</option>
+            <option value="1">Ativo</option>
+            <option value="0">Inativo</option>
+        </select>
+        <button class="btn btn-secondary" onclick="aplicarFiltros()">
+            <i class="fas fa-filter"></i> Aplicar
+        </button>
+        <button class="btn btn-primary" onclick="carregarUsuarios()">
+            <i class="fas fa-sync-alt"></i> Atualizar
+        </button>
+    </div>
+
+    <!-- TABELA -->
+    <div id="usuarios-table-container">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando usuários...</div>
+    </div>
+
+</div>
+
+<!-- MODAL CONTAINER -->
+<div id="modal-container" class="modal-container"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.currentUserNivel = {{ current_user.nivel_credencial }};
+</script>
+<script src="{{ url_for('static', filename='js/parts/gerenciar_usuarios.js') }}"></script>
+{% endblock %}

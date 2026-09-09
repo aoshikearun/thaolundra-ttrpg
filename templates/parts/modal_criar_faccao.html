@@ -1,0 +1,95 @@
+<!-- ========================================== -->
+<!-- MODAL CRIAR FACÇÃO                         -->
+<!-- ========================================== -->
+
+<div id="modal-criar-faccao" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🏛️ Criar Nova Facção</h3>
+            <button class="modal-close" onclick="fecharModalCriarFaccao()">✕</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-description">
+                Crie uma facção para reunir jogadores com objetivos e ideais em comum.
+            </p>
+
+            <form id="form-criar-faccao" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="faccao-nome">Nome da Facção *</label>
+                    <input type="text" id="faccao-nome" class="form-control" placeholder="Ex: Guardiões de Eldoria">
+                </div>
+
+                <div class="form-group">
+                    <label for="faccao-manifesto">Manifesto / Descrição</label>
+                    <textarea id="faccao-manifesto" class="form-control" rows="4" placeholder="Descreva os ideais, objetivos e história da facção..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="faccao-lema">Lema</label>
+                    <input type="text" id="faccao-lema" class="form-control" placeholder="Ex: 'Pela honra e pela glória!'">
+                </div>
+
+                <div class="form-group">
+                    <label for="faccao-emoji">Emoji / Ícone</label>
+                    <div class="emoji-picker-row" id="emoji-picker-row">
+                        <span class="emoji-option selected" onclick="selecionarEmojiFaccao(this, '⚔️')">⚔️</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🛡️')">🛡️</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '👑')">👑</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🐉')">🐉</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🌟')">🌟</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🔥')">🔥</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '💀')">💀</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🌙')">🌙</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '☀️')">☀️</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🌿')">🌿</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '⚡')">⚡</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🌀')">🌀</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🏰')">🏰</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🗡️')">🗡️</span>
+                        <span class="emoji-option" onclick="selecionarEmojiFaccao(this, '🏹')">🏹</span>
+                        <span class="emoji-option custom" onclick="abrirEmojiPickerFaccao()">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                    </div>
+                    <input type="hidden" id="faccao-emoji-input" value="⚔️">
+                    <span class="form-help">Escolha o emoji que representará a facção</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Cor da Facção</label>
+                    <div class="color-picker-row">
+                        <div class="color-option selected" style="background: #ffb347;" onclick="selecionarCorFaccao(this, '#ffb347')"></div>
+                        <div class="color-option" style="background: #ef4444;" onclick="selecionarCorFaccao(this, '#ef4444')"></div>
+                        <div class="color-option" style="background: #3b82f6;" onclick="selecionarCorFaccao(this, '#3b82f6')"></div>
+                        <div class="color-option" style="background: #10b981;" onclick="selecionarCorFaccao(this, '#10b981')"></div>
+                        <div class="color-option" style="background: #8b5cf6;" onclick="selecionarCorFaccao(this, '#8b5cf6')"></div>
+                        <div class="color-option" style="background: #ec4899;" onclick="selecionarCorFaccao(this, '#ec4899')"></div>
+                        <div class="color-option" style="background: #f59e0b;" onclick="selecionarCorFaccao(this, '#f59e0b')"></div>
+                        <div class="color-option" style="background: #14b8a6;" onclick="selecionarCorFaccao(this, '#14b8a6')"></div>
+                        <div class="color-option custom" onclick="abrirColorPickerFaccao()">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <input type="hidden" id="faccao-cor" value="#ffb347">
+                    <span class="form-help">Escolha a cor que representará a facção</span>
+                </div>
+
+                <div class="flag-preview" id="flag-preview">
+                    <div class="flag-emoji" id="flag-emoji">⚔️</div>
+                    <div class="flag-color" id="flag-color" style="background: #ffb347;"></div>
+                    <div class="flag-info">
+                        <span class="flag-nome" id="flag-preview-nome">Nome da Facção</span>
+                        <span class="flag-lema" id="flag-preview-lema">Lema da facção</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalCriarFaccao()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="criarFaccaoModal()">
+                        <i class="fas fa-plus"></i> Criar Facção
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

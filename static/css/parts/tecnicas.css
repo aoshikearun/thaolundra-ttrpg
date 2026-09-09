@@ -1,0 +1,440 @@
+/* tecnicas.css - Tudo relacionado às técnicas (fase 1, 2, 3) */
+
+.fase-tecnicas {
+    animation: fadeIn 0.3s ease;
+}
+
+.tecnicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+/* ===== CARDS DE TÉCNICAS - NOVO DESIGN (baseado no card-exemplo) ===== */
+.tecnica-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid #2a2a44;
+    background: #1a1a30;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 110px;
+}
+
+.tecnica-card:hover {
+    border-color: #ffb347;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.tecnica-card.selected {
+    border-color: #ffb347;
+    box-shadow: 0 0 30px rgba(255, 179, 71, 0.08);
+}
+
+/* ===== CORES DAS FONTES ===== */
+.tecnica-card.fonte-fogo { --cor-fonte: #ff6b6b; }
+.tecnica-card.fonte-agua { --cor-fonte: #4dabf7; }
+.tecnica-card.fonte-vento { --cor-fonte: #ff85c8; }
+.tecnica-card.fonte-terra { --cor-fonte: #ff9c00; }
+.tecnica-card.fonte-floresta { --cor-fonte: #51cf66; }
+.tecnica-card.fonte-trovao { --cor-fonte: #ffd700; }
+.tecnica-card.fonte-luz { --cor-fonte: #ffffff; }
+.tecnica-card.fonte-trevas { --cor-fonte: #845ef7; }
+.tecnica-card.fonte-fumaca { --cor-fonte: #ff6b6b; }
+.tecnica-card.fonte-magma { --cor-fonte: #ff6b6b; }
+.tecnica-card.fonte-miasma { --cor-fonte: #51cf66; }
+.tecnica-card.fonte-tufao { --cor-fonte: #4dabf7; }
+.tecnica-card.fonte-tempestade { --cor-fonte: #4dabf7; }
+.tecnica-card.fonte-primal { --cor-fonte: #ffd700; }
+.tecnica-card.fonte-cottage { --cor-fonte: #51cf66; }
+.tecnica-card.fonte-candieiro { --cor-fonte: #845ef7; }
+.tecnica-card.fonte-retiro { --cor-fonte: #ffffff; }
+.tecnica-card.fonte-lamina { --cor-fonte: #ff85c8; }
+.tecnica-card.fonte-alvorada { --cor-fonte: #ffffff; }
+.tecnica-card.fonte-trovoada-flamejante { --cor-fonte: #ff6b6b; }
+.tecnica-card.fonte-cristal { --cor-fonte: #ffffff; }
+.tecnica-card.fonte-mercurio { --cor-fonte: #ff9c00; }
+.tecnica-card.fonte-cascata { --cor-fonte: #4dabf7; }
+
+/* ===== CAMADA DO SÍMBOLO ===== */
+.tecnica-card .camada-simbolo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    opacity: 0.22; /* Normal: 0.22 */
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.tecnica-card:hover .camada-simbolo {
+    opacity: 0.55; /* Hover: 0.55 */
+}
+
+.tecnica-card.selected .camada-simbolo {
+    opacity: 0.45; /* Selected: 0.45 */
+}
+
+.tecnica-card .camada-simbolo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left center;
+    display: block;
+    transform: scale(1.05);
+    transition: filter 0.4s ease;
+    filter: brightness(0.3) saturate(0) contrast(1);
+}
+
+.tecnica-card:hover .camada-simbolo img {
+    filter: brightness(0.5) saturate(1) drop-shadow(0 0 30px var(--cor-fonte, rgba(255, 133, 200, 0.15)));
+}
+
+.tecnica-card.selected .camada-simbolo img {
+    filter: brightness(0.6) saturate(1.2) drop-shadow(0 0 40px var(--cor-fonte, rgba(255, 133, 200, 0.2)));
+}
+
+/* ===== CARD GLOW ===== */
+.tecnica-card .card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(255, 179, 71, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.tecnica-card.selected .card-glow {
+    opacity: 1;
+}
+
+/* ===== CONTEÚDO ===== */
+.tecnica-card .camada-conteudo {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: stretch;
+    min-height: 110px;
+    padding: 14px 16px;
+    gap: 14px;
+    background: rgba(18, 18, 30, 0.6);
+    backdrop-filter: blur(1px);
+}
+
+.tecnica-card:hover .camada-conteudo {
+    background: rgba(18, 18, 30, 0.5);
+}
+
+.tecnica-card.selected .camada-conteudo {
+    background: rgba(18, 18, 30, 0.55);
+}
+
+/* ===== BOLINHA ===== */
+.tecnica-card .col-bolinha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tecnica-card .bolinha {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #3a3a5e;
+    background: transparent;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.tecnica-card:hover .bolinha {
+    border-color: #ffb347;
+}
+
+.tecnica-card .bolinha.ativa {
+    background: #ffb347;
+    border-color: #ffb347;
+    box-shadow: 0 0 16px rgba(255, 179, 71, 0.3);
+}
+
+/* ===== CONTEÚDO TEXTUAL ===== */
+.tecnica-card .col-conteudo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 2px 0;
+}
+
+.tecnica-card .col-conteudo .top-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tecnica-card .col-conteudo .nome {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+/* COR DO NOME - usa a cor da fonte */
+.tecnica-card:hover .col-conteudo .nome {
+    color: var(--cor-fonte, #ff85c8);
+}
+
+.tecnica-card.selected .col-conteudo .nome {
+    color: var(--cor-fonte, #ff85c8);
+}
+
+.tecnica-card .col-conteudo .fonte {
+    font-size: 13px;
+    color: #888;
+    margin-top: 1px;
+}
+
+.tecnica-card .col-conteudo .fonte span {
+    color: var(--cor-fonte, #ff85c8);
+    font-weight: 500;
+}
+
+.tecnica-card .col-conteudo .desc {
+    font-size: 13px;
+    color: #777;
+    margin-top: 2px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tecnica-card .col-conteudo .custo {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+    padding: 2px 12px;
+    background: rgba(20, 20, 40, 0.5);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    display: inline-block;
+    width: fit-content;
+}
+
+.tecnica-card .col-conteudo .custo strong {
+    color: #ffd93d;
+}
+
+/* ===== CATEGORIA ===== */
+.tecnica-card .col-categoria {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.04);
+    min-width: 48px;
+}
+
+.tecnica-card .col-categoria .cat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.tecnica-card .col-categoria .cat .icone {
+    font-size: 26px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.tecnica-card:hover .col-categoria .cat .icone {
+    transform: scale(1.05);
+}
+
+.tecnica-card .col-categoria .cat .label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.tecnica-card .col-categoria .cat .label.inata { color: #ff6b6b; }
+.tecnica-card .col-categoria .cat .label.basica { color: #4ecdc4; }
+.tecnica-card .col-categoria .cat .label.avancada { color: #ffd93d; }
+.tecnica-card .col-categoria .cat .label.ultima { color: #a29bfe; }
+
+/* ===== FASE 2 E 3 ===== */
+.tecnicas-selecionadas {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tecnica-card-compact {
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tecnica-info-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.tecnica-icon-compact {
+    font-size: 1.5rem;
+}
+
+.tecnica-nome-compact {
+    font-weight: bold;
+}
+
+.tecnica-categoria-compact {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.pontos-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-ponto {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    color: var(--primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-ponto:hover {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+}
+
+.btn-ponto.danger:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.valor-ponto {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary);
+    min-width: 40px;
+    text-align: center;
+}
+
+/* ===== LIMITES E AVISOS ===== */
+.tecnicas-limites {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.limite-badge.avancada {
+    background: var(--warning-bg);
+    color: var(--warning);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.limite-badge.ultima {
+    background: var(--info-bg);
+    color: var(--info);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.tecnicas-aviso {
+    background: var(--info-bg);
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+}
+
+.btn-next-fase:disabled,
+.btn-continuar-tecnicas:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 600px) {
+    .tecnicas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tecnica-card .camada-conteudo {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .tecnica-card .col-categoria {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        width: 100%;
+        justify-content: center;
+        padding-top: 6px;
+        min-width: 0;
+    }
+
+    .tecnica-card .col-categoria .cat {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .tecnica-card .col-categoria .cat .icone {
+        font-size: 20px;
+    }
+
+    .tecnica-card .col-categoria .cat .label {
+        font-size: 10px;
+    }
+
+    .tecnica-card .col-conteudo .nome {
+        font-size: 15px;
+    }
+
+    .tecnica-card .col-conteudo .desc {
+        font-size: 12px;
+    }
+}

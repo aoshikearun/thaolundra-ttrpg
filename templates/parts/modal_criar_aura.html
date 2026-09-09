@@ -1,0 +1,62 @@
+<!-- ========================================== -->
+<!-- MODAL CRIAR AURA                           -->
+<!-- ========================================== -->
+
+<div id="modal-criar-aura" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>✨ Criar Nova Aura</h3>
+            <button class="modal-close" onclick="fecharModalCriarAura()">✕</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-description">
+                Crie uma aura única para seu personagem. A aura é uma manifestação visual do poder elemental.
+            </p>
+
+            <form id="form-criar-aura" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="aura-nome">Nome da Aura *</label>
+                    <input type="text" id="aura-nome" class="form-control" placeholder="Ex: Aura Flamejante">
+                </div>
+
+                <div class="form-group">
+                    <label for="aura-descricao">Descrição</label>
+                    <textarea id="aura-descricao" class="form-control" rows="4" placeholder="Descreva os efeitos visuais e a aparência da aura..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Cor da Aura</label>
+                    <div class="color-picker-row">
+                        <div class="color-option selected" style="background: #ff6b6b;" onclick="selecionarCorAura(this, '#ff6b6b')"></div>
+                        <div class="color-option" style="background: #4dabf7;" onclick="selecionarCorAura(this, '#4dabf7')"></div>
+                        <div class="color-option" style="background: #51cf66;" onclick="selecionarCorAura(this, '#51cf66')"></div>
+                        <div class="color-option" style="background: #ffd93d;" onclick="selecionarCorAura(this, '#ffd93d')"></div>
+                        <div class="color-option" style="background: #845ef7;" onclick="selecionarCorAura(this, '#845ef7')"></div>
+                        <div class="color-option" style="background: #ff85c8;" onclick="selecionarCorAura(this, '#ff85c8')"></div>
+                        <div class="color-option" style="background: #ffffff;" onclick="selecionarCorAura(this, '#ffffff')"></div>
+                        <div class="color-option custom" onclick="abrirColorPickerAura()">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <input type="hidden" id="aura-cor" value="#ff6b6b">
+                    <span class="form-help">Escolha a cor que representa a aura</span>
+                </div>
+
+                <div class="aura-preview" id="aura-preview">
+                    <div class="aura-circle" id="aura-circle"></div>
+                    <div class="aura-info">
+                        <span class="aura-nome" id="aura-preview-nome">Nome da Aura</span>
+                        <span class="aura-desc" id="aura-preview-desc">Descrição da aura aparecerá aqui</span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalCriarAura()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="criarAuraModal()">
+                        <i class="fas fa-plus"></i> Criar Aura
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

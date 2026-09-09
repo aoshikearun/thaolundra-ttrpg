@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thaolundra RPG</title>
+
+    <!-- Bibliotecas externas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- CSS Globais -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global/core.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global/layouts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global/pages.css') }}">
+
+    <!-- CSS das partes específicas -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/atributos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/pericias.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/tecnicas.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/progressao_exp.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/criar-stepper.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/carousel-species.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/carousel-fontes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/view_sheet.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/items.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/gerenciar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/usuarios.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/criar_ficha.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/parts/personagens.css') }}">
+</head>
+<body>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-dragon"></i> Thaolundra</h3>
+            <p class="sidebar-subtitle">RPG System</p>
+        </div>
+
+        <div class="sidebar-group">
+            <h4><i class="fas fa-users"></i> Personagens</h4>
+            <button class="sidebar-btn" onclick="openWindow('todos_personagens')">
+                <i class="fas fa-users"></i> Galeria
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('criar_personagem')">
+                <i class="fas fa-plus-circle"></i> Criar Personagem
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('meus_personagens')">
+                <i class="fas fa-scroll"></i> Meus Personagens
+            </button>
+        </div>
+
+        <div class="sidebar-group">
+            <h4><i class="fas fa-dice-d20"></i> Mesas</h4>
+            <button class="sidebar-btn" onclick="openWindow('mesas')">
+                <i class="fas fa-dice-d20"></i> Mesas Ativas
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('minhas_mesas')">
+                <i class="fas fa-crown"></i> Minhas Mesas
+            </button>
+        </div>
+
+        <div class="sidebar-group">
+            <h4><i class="fas fa-tools"></i> Administração</h4>
+            <button class="sidebar-btn" onclick="openWindow('gerenciar_conteudo')">
+                <i class="fas fa-book"></i> Gerenciar Conteúdo
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('gerenciar_usuarios')">
+                <i class="fas fa-user-cog"></i> Gerenciar Usuários
+            </button>
+            <button class="sidebar-btn" onclick="openWindow('gerenciar_mesas')">
+                <i class="fas fa-chess-board"></i> Gerenciar Mesas
+            </button>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <div class="user-details">
+                    <strong>{{ user.username if user else 'Visitante' }}</strong>
+                    <small>
+                        {% if user %}
+                            {% if user.nivel_credencial == 0 %}Espectador
+                            {% elif user.nivel_credencial == 1 %}Jogador
+                            {% elif user.nivel_credencial == 2 %}Narrador
+                            {% elif user.nivel_credencial == 3 %}Guardião
+                            {% elif user.nivel_credencial == 4 %}Moderador
+                            {% elif user.nivel_credencial == 5 %}Administrador
+                            {% else %}Nível {{ user.nivel_credencial }}
+                            {% endif %}
+                        {% else %}
+                            Visitante
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+            <button class="sidebar-btn logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <h1><i class="fas fa-dragon"></i> Thaolundra RPG</h1>
+                <p>Sistema de gerenciamento de campanhas</p>
+            </div>
+            <div class="header-right">
+                <!-- Theme.js vai inserir os controles aqui -->
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div id="welcome-canvas-container" class="welcome-canvas-container">
+                <div class="welcome-message">
+                    <img src="/static/imgs/logo.png" class="logo" alt="Logo de Thaolundra" width="350" height="350">
+                    <h2>BEM-VINDO</h2>
+                    <div class="quick-stats">
+                        <p>Selecione uma opção no menu lateral para começar</p>
+                    </div>
+                    <div class="dash-stats-container">
+                        <div class="dash-stats-grid">
+                            <div class="dash-stats-card dash-stats-card-users">
+                                <div class="dash-stats-icon">👥</div>
+                                <div class="dash-stats-number" id="dash-total-users">--</div>
+                                <div class="dash-stats-label">USUÁRIOS</div>
+                            </div>
+                            <div class="dash-stats-card dash-stats-card-characters">
+                                <div class="dash-stats-icon">📝</div>
+                                <div class="dash-stats-number" id="dash-total-characters">--</div>
+                                <div class="dash-stats-label">PERSONAGENS</div>
+                                <div class="dash-stats-divider"></div>
+                                <div class="dash-stats-sub">
+                                    <div>📌 Públicos</div>
+                                    <div class="dash-stats-sub-value" id="dash-public-characters">--</div>
+                                </div>
+                            </div>
+                            <div class="dash-stats-card dash-stats-card-tables">
+                                <div class="dash-stats-icon">🎲</div>
+                                <div class="dash-stats-number" id="dash-total-tables">--</div>
+                                <div class="dash-stats-label">MESAS</div>
+                                <div class="dash-stats-divider"></div>
+                                <div class="dash-stats-sub">
+                                    <div>✅ Ativas</div>
+                                    <div class="dash-stats-sub-value" id="dash-active-tables">--</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="main-footer">
+            <p>Thaolundra RPG © 2026 - Sistema de Gerenciamento</p>
+            <div class="footer-links">
+                <a href="#"><i class="fas fa-question-circle"></i> Ajuda</a>
+                <a href="#"><i class="fas fa-book"></i> Documentação</a>
+                <a href="#"><i class="fas fa-bug"></i> Reportar Bug</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts Globais -->
+    <script src="{{ url_for('static', filename='js/global/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/global/sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/global/main.js') }}"></script>
+
+    <!-- Fundo animado -->
+    <script src="{{ url_for('static', filename='js/parts/welcomebg.js') }}"></script>
+
+    <!-- Personagens -->
+    <script src="{{ url_for('static', filename='js/parts/meus_personagens.js') }}"></script>
+
+    <!-- Criação de Ficha (Carrosséis) -->
+    <script src="{{ url_for('static', filename='js/parts/criacao/carousel-species.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/carousel-fontes.js') }}"></script>
+
+    <!-- Criação de Ficha (Stepper e Progressão) -->
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar-stepper.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/progressao_exp.js') }}"></script>
+
+    <!-- Criação de Ficha (Módulos) -->
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_ficha.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_categorias.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_fundamental.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_atributos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_pericias.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_tecnicas.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/criacao/criar_final.js') }}"></script>
+
+    <!-- Gerenciamento -->
+    <script src="{{ url_for('static', filename='js/parts/gerenciar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parts/gerenciar_usuarios.js') }}"></script>
+
+    <script>
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                window.location.href = '/logout';
+            }
+        }
+    </script>
+</body>
+</html>

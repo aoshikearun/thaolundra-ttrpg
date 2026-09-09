@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/listar_mesas.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/modal_mesa.css') }}">
+{% endblock %}
+
+{% block title %}Mesas - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="mesas-container">
+    <div class="mesas-header">
+        <h1>🎭 Mesas</h1>
+        <button class="btn btn-primary" onclick="abrirModalCriarMesa()">➕ Criar Mesa</button>
+    </div>
+
+    <!-- MINHAS MESAS -->
+    {% if minhas_mesas %}
+    <h2>🎯 Minhas Mesas</h2>
+    <div class="mesas-grid">
+        {% for mesa in minhas_mesas %}
+        <div class="mesa-card-wrapper">
+            <div class="mesa-card">
+                <div class="bg-image" style="background-image: url('{{ mesa.imagem_fundo or 'https://i.pinimg.com/736x/82/fa/57/82fa577184477bb5d189f1bc0592431a.jpg' }}');"></div>
+                <div class="bg-overlay"></div>
+
+                <div class="mesa-status-light {% if mesa.ativa %}ativa{% else %}inativa{% endif %}"></div>
+
+                <div class="conteudo">
+                    <div class="mesa-card-header">
+                        <h3>{{ mesa.nome }}</h3>
+                        <div class="capacidades">
+                            <span class="capacidade-badge">👥 <span class="num">{{ mesa.participantes_atual or 0 }}</span>/{{ mesa.capacidade }}</span>
+                            <span class="capacidade-badge">👁️ <span class="num">{{ mesa.espectadores_atual or 0 }}</span>/{{ mesa.capacidade_espectadores or 10 }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mesa-descricao">{{ mesa.descricao or 'Sem descrição' }}</div>
+                    <div class="mesa-narrador">🎭 Narrador: <span>{{ mesa.narrador_nome or 'Desconhecido' }}</span></div>
+
+                    <div class="mesa-card-footer">
+                        {% if mesa.pode_entrar or mesa.pode_assistir %}
+                            <button class="btn btn-entrar" onclick="entrarMesa({{ mesa.id }})">🚪 Entrar</button>
+                        {% endif %}
+                        {% if mesa.pode_editar %}
+                            <button class="btn btn-editar" onclick="abrirModalEditarMesa({{ mesa.id }})">✏️ Editar</button>
+                        {% endif %}
+                        {% if mesa.pode_assistir %}
+                            <button class="btn btn-assistir" onclick="assistirMesa({{ mesa.id }})">👁️ Assistir</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="conexoes-lateral">
+                <div class="conexao-titulo">👥 CONEXÕES ({{ mesa.total_conexoes or 0 }})</div>
+                <div class="conexoes-lista">
+                    {% if mesa.conexoes %}
+                        {% for conexao in mesa.conexoes %}
+                        <div class="conexao-item">
+                            <div class="conexao-avatar">{{ conexao.nome[0]|upper }}</div>
+                            <span class="conexao-nome">{{ conexao.nome }}</span>
+                            <span class="conexao-cargo {{ conexao.cargo|lower }}">{{ conexao.cargo }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="color: #666; font-size: 12px; padding: 8px 0;">Nenhuma conexão ativa</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- MESAS DISPONÍVEIS -->
+    <h2>📋 Mesas Disponíveis</h2>
+    {% if mesas %}
+    <div class="mesas-grid">
+        {% for mesa in mesas %}
+        <div class="mesa-card-wrapper">
+            <div class="mesa-card">
+                <div class="bg-image" style="background-image: url('{{ mesa.imagem_fundo or 'https://i.pinimg.com/736x/83/6c/24/836c24504913627df5046f4ccd93ba1d.jpg' }}');"></div>
+                <div class="bg-overlay"></div>
+
+                <div class="mesa-status-light {% if mesa.ativa %}ativa{% else %}inativa{% endif %}"></div>
+
+                {% if mesa.convite_pendente %}
+                <div class="convite-pendente" onclick="aceitarConvite({{ mesa.id }})">
+                    ✉️
+                    <span class="tooltip-convite">📩 Você tem um convite pendente! Clique para aceitar.</span>
+                </div>
+                {% endif %}
+
+                <div class="conteudo">
+                    <div class="mesa-card-header">
+                        <h3>{{ mesa.nome }}</h3>
+                        <div class="capacidades">
+                            <span class="capacidade-badge">👥 <span class="num">{{ mesa.participantes_atual or 0 }}</span>/{{ mesa.capacidade }}</span>
+                            <span class="capacidade-badge">👁️ <span class="num">{{ mesa.espectadores_atual or 0 }}</span>/{{ mesa.capacidade_espectadores or 10 }}</span>
+                        </div>
+                    </div>
+
+                    <div class="mesa-descricao">{{ mesa.descricao or 'Sem descrição' }}</div>
+                    <div class="mesa-narrador">🎭 Narrador: <span>{{ mesa.narrador_nome or 'Desconhecido' }}</span></div>
+
+                    <div class="mesa-card-footer">
+                        {% if mesa.pode_entrar %}
+                            <button class="btn btn-entrar" onclick="entrarMesa({{ mesa.id }})">🚪 Entrar</button>
+                        {% endif %}
+                        {% if mesa.pode_editar %}
+                            <button class="btn btn-editar" onclick="abrirModalEditarMesa({{ mesa.id }})">✏️ Editar</button>
+                        {% endif %}
+                        {% if mesa.pode_assistir %}
+                            <button class="btn btn-assistir" onclick="assistirMesa({{ mesa.id }})">👁️ Assistir</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="conexoes-lateral">
+                <div class="conexao-titulo">👥 CONEXÕES ({{ mesa.total_conexoes or 0 }})</div>
+                <div class="conexoes-lista">
+                    {% if mesa.conexoes %}
+                        {% for conexao in mesa.conexoes %}
+                        <div class="conexao-item">
+                            <div class="conexao-avatar">{{ conexao.nome[0]|upper }}</div>
+                            <span class="conexao-nome">{{ conexao.nome }}</span>
+                            <span class="conexao-cargo {{ conexao.cargo|lower }}">{{ conexao.cargo }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div style="color: #666; font-size: 12px; padding: 8px 0;">Nenhuma conexão ativa</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-message">
+        <p>Nenhuma mesa disponível no momento.</p>
+        <p>Seja um Narrador e crie sua própria aventura!</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- MODAL DE MESA -->
+{% include 'parts/modal_mesa.html' %}
+
+<script>
+function entrarMesa(mesaId) {
+    fetch(`/mesa/api/${mesaId}/entrar`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = `/mesa/${mesaId}`;
+        } else {
+            // Se já estiver na mesa, vai direto
+            if (data.message.includes('já está')) {
+                window.location.href = `/mesa/${mesaId}`;
+            } else {
+                alert('Erro ao entrar na mesa: ' + data.message);
+            }
+        }
+    })
+    .catch(error => {
+        alert('Erro ao entrar na mesa');
+    });
+}
+
+function assistirMesa(mesaId) {
+    window.location.href = `/mesa/${mesaId}?mode=espectador`;
+}
+
+function aceitarConvite(mesaId) {
+    if (confirm('🎉 Aceitar convite para esta mesa?')) {
+        fetch(`/mesa/api/${mesaId}/convite/aceitar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ Convite aceito!');
+                location.reload();
+            } else {
+                alert('❌ ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Erro ao aceitar convite');
+        });
+    }
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/parts/modal_mesa.js') }}"></script>
+{% endblock %}

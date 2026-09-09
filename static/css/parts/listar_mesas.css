@@ -1,0 +1,500 @@
+/* listar_mesas.css - Estilos para lista de mesas */
+
+/* ============================================ */
+/* CARDS DE MESA - DESIGN UNIFICADO */
+/* ============================================ */
+.mesas-container {
+    padding: 20px;
+    min-height: 100vh;
+    background: var(--bg-primary);
+}
+
+.mesas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.mesas-header h1 {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.mesas-container h2 {
+    margin: 30px 0 15px;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+.mesas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* ===== CARD DE MESA ===== */
+.mesa-card-wrapper {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.mesa-card {
+    flex: 1;
+    background: #1a1a30;
+    border: 1px solid #2a2a44;
+    border-radius: 16px;
+    padding: 24px 28px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    min-height: 200px;
+}
+
+/* Imagem de fundo */
+.mesa-card .bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    opacity: 0.35;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.4s ease;
+}
+
+.mesa-card:hover .bg-image {
+    opacity: 0.50;
+}
+
+.mesa-card .bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: linear-gradient(
+        90deg,
+        rgba(13, 13, 26, 0.5) 0%,
+        rgba(26, 26, 48, 0.7) 40%,
+        rgba(20, 20, 40, 0.85) 70%,
+        rgba(10, 10, 20, 0.95) 100%
+    );
+    pointer-events: none;
+}
+
+.mesa-card .conteudo {
+    position: relative;
+    z-index: 2;
+}
+
+.mesa-card:hover {
+    border-color: #ffb347;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    z-index: 2;
+}
+
+/* Luz de status */
+.mesa-status-light {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    z-index: 3;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.mesa-status-light.ativa {
+    background: #10b981;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.5);
+}
+
+.mesa-status-light.inativa {
+    background: #ef4444;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.5);
+}
+
+/* Convite pendente */
+.convite-pendente {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    font-size: 28px;
+    z-index: 3;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(255, 179, 71, 0.3));
+    animation: pulse-convite 2s ease-in-out infinite;
+}
+
+.convite-pendente:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 20px rgba(255, 179, 71, 0.5));
+}
+
+@keyframes pulse-convite {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.convite-pendente .tooltip-convite {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    right: 0;
+    background: rgba(10, 10, 20, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 179, 71, 0.2);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: #eee;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: all 0.3s ease;
+}
+
+.convite-pendente:hover .tooltip-convite {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.convite-pendente .tooltip-convite::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 12px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(255, 179, 71, 0.2);
+}
+
+/* Header do card */
+.mesa-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    padding-right: 24px;
+}
+
+.mesa-card-header h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    transition: color 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mesa-card:hover .mesa-card-header h3 {
+    color: #ffb347;
+}
+
+.capacidades {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.capacidade-badge {
+    font-size: 12px;
+    color: #ccc;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(4px);
+}
+
+.capacidade-badge .num {
+    color: #ffb347;
+    font-weight: 600;
+}
+
+.mesa-descricao {
+    font-size: 15px;
+    color: #e0e0e0;
+    margin: 8px 0 14px 0;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 48px;
+    padding-right: 24px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.mesa-narrador {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 16px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.mesa-narrador span {
+    color: #ffb347;
+    font-weight: 500;
+}
+
+/* Botões */
+.mesa-card-footer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-entrar {
+    background: #ffb347;
+    color: #0d0d1a;
+}
+
+.btn-entrar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(255, 179, 71, 0.3);
+}
+
+.btn-editar {
+    background: rgba(59, 130, 246, 0.25);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.btn-editar:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-assistir {
+    background: rgba(16, 185, 129, 0.25);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.btn-assistir:hover {
+    background: #10b981;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-hidden {
+    display: none !important;
+}
+
+/* Conexões lateral */
+.conexoes-lateral {
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 0;
+    width: 240px;
+    background: rgba(10, 10, 20, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 179, 71, 0.15);
+    border-radius: 12px;
+    padding: 16px 18px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-8px);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 10;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    max-height: 340px;
+    overflow-y: auto;
+}
+
+.conexoes-lateral::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid rgba(255, 179, 71, 0.15);
+}
+
+.mesa-card-wrapper:hover .conexoes-lateral {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(8px);
+}
+
+.conexoes-lateral .conexao-titulo {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.conexoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.conexao-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.conexao-item:last-child {
+    border-bottom: none;
+}
+
+.conexao-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.06);
+    color: #888;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.conexao-nome {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+}
+
+.conexao-cargo {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 10px;
+    border-radius: 12px;
+}
+
+.conexao-cargo.narrador {
+    color: #ffb347;
+    background: rgba(255, 179, 71, 0.12);
+}
+
+.conexao-cargo.jogador {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.12);
+}
+
+.conexao-cargo.espectador {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.conexoes-lateral::-webkit-scrollbar {
+    width: 3px;
+}
+
+.conexoes-lateral::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 2px;
+}
+
+.conexoes-lateral::-webkit-scrollbar-thumb {
+    background: rgba(255, 179, 71, 0.3);
+    border-radius: 2px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 820px) {
+    .conexoes-lateral {
+        left: 0;
+        top: calc(100% + 12px);
+        width: 100%;
+        transform: translateY(-8px);
+        max-height: 260px;
+    }
+
+    .conexoes-lateral::before {
+        left: 30px;
+        top: -8px;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid rgba(255, 179, 71, 0.15);
+        border-left: 8px solid transparent;
+    }
+
+    .mesa-card-wrapper:hover .conexoes-lateral {
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .mesa-card {
+        padding: 18px 16px;
+    }
+
+    .mesa-card-header h3 {
+        font-size: 18px;
+    }
+
+    .capacidades {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .capacidade-badge {
+        font-size: 10px;
+        padding: 2px 10px;
+    }
+
+    .mesa-descricao {
+        font-size: 13px;
+        -webkit-line-clamp: 4;
+        padding-right: 0;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .convite-pendente {
+        font-size: 22px;
+        bottom: 14px;
+        right: 14px;
+    }
+}

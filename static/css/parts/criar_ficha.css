@@ -1,0 +1,224 @@
+/* criar_ficha.css - Estilos específicos para criação de ficha */
+
+/* ===== CATEGORIAS GRID ===== */
+.categorias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.categoria-card {
+    background: var(--bg-tertiary);
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    text-align: center;
+}
+
+.categoria-card:hover {
+    transform: translateY(-5px);
+    background: var(--bg-hover);
+    border-color: var(--primary-border);
+}
+
+.categoria-card.selected {
+    border-color: var(--primary);
+    background: var(--primary-bg);
+    box-shadow: 0 0 20px rgba(255, 179, 71, 0.2);
+}
+
+.categoria-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.categoria-card h3 {
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.categoria-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* ===== STEP CONTAINER ===== */
+.ficha-step {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.ficha-step.active {
+    display: block;
+}
+
+.step-description {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+/* ===== INFO BOX ===== */
+.info-box {
+    background: var(--primary-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 20px 0;
+}
+
+.info-box h4 {
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.info-grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+/* ===== SPECIES SELECTOR ===== */
+.species-selector {
+    margin: 20px 0;
+}
+
+.species-selector .btn {
+    width: 100%;
+    max-width: 400px;
+    justify-content: space-between;
+}
+
+/* ===== FORM SECTIONS ===== */
+.form-section {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.form-section h3 {
+    color: var(--primary);
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+
+.qualidades-defeitos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .qualidades-defeitos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.caracteristicas-lista {
+    min-height: 100px;
+    margin: 12px 0;
+}
+
+.btn-add {
+    background: var(--primary-bg);
+    border: 1px dashed var(--primary);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.btn-add:hover {
+    background: rgba(255, 179, 71, 0.2);
+}
+
+.score-preview {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    margin-top: 16px;
+}
+
+/* ===== PUBLICAÇÃO ===== */
+.publicacao-card {
+    background: var(--bg-tertiary);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nome-container {
+    margin-bottom: 24px;
+}
+
+.nome-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.nome-container input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 40px;
+    color: var(--text-primary);
+    font-size: 16px;
+    text-align: center;
+}
+
+.privado-container {
+    margin: 20px 0;
+}
+
+.privado-container label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.privado-container small {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
+
+.publicacao-aviso {
+    background: var(--info-bg);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    .categorias-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        flex-direction: column;
+        gap: 8px;
+    }
+}

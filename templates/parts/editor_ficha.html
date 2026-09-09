@@ -1,0 +1,452 @@
+<!-- ========================================== -->
+<!-- EDITOR DE FICHA - MODAL COM 4 ABAS        -->
+<!-- ========================================== -->
+
+<div id="modal-editor-ficha" class="modal-editor" style="display: none;">
+    <div class="modal-editor-content">
+
+        <!-- HEADER -->
+        <div class="modal-editor-header">
+            <div class="header-glow"></div>
+            <div style="display:flex;align-items:center;gap:8px;position:relative;z-index:1;">
+                <h3>✏️ Editar Personagem</h3>
+                <span class="fonte-badge" id="editor-fonte-badge">
+                    <span class="dot"></span>
+                    Fogo
+                </span>
+            </div>
+            <button class="modal-editor-close" id="btn-fechar-editor-ficha">✕</button>
+        </div>
+
+        <!-- TABS -->
+        <div class="modal-editor-tabs">
+            <button class="tab-btn active" data-tab="editor-basico" onclick="switchEditorTab('editor-basico')">
+                <span class="tab-icon">📝</span> Básico
+            </button>
+            <button class="tab-btn" data-tab="editor-atributos" onclick="switchEditorTab('editor-atributos')">
+                <span class="tab-icon">⚡</span> Atributos
+            </button>
+            <button class="tab-btn" data-tab="editor-pericias" onclick="switchEditorTab('editor-pericias')">
+                <span class="tab-icon">📚</span> Perícias & Técnicas
+            </button>
+            <button class="tab-btn" data-tab="editor-social" onclick="switchEditorTab('editor-social')">
+                <span class="tab-icon">🎭</span> Social
+            </button>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ABA 1: INFORMAÇÕES BÁSICAS                -->
+        <!-- ========================================== -->
+        <div id="editor-basico" class="editor-tab-content active">
+            <div class="editor-grid-2col">
+                <div class="editor-col">
+                    <div class="form-group">
+                        <label for="edit-nome">Nome</label>
+                        <input type="text" id="edit-nome" class="form-control" placeholder="Ex: Aerion Valefar">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-ocupacao">Ocupação</label>
+                        <input type="text" id="edit-ocupacao" class="form-control" placeholder="Ex: Guerreiro">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-moradia">Moradia</label>
+                        <input type="text" id="edit-moradia" class="form-control" placeholder="Ex: Cidade de Eldoria">
+                    </div>
+                </div>
+                <div class="editor-col">
+                    <div class="form-group">
+                        <label for="edit-especie">Espécie</label>
+                        <select id="edit-especie" class="form-control">
+                            <option value="">Selecione...</option>
+                            <option value="1">Bestial</option>
+                            <option value="2" selected>Humano</option>
+                            <option value="3">Klaveck</option>
+                            <option value="4">Darch</option>
+                            <option value="5">Sombra</option>
+                            <option value="6">Mecha</option>
+                            <option value="7">Rokan</option>
+                            <option value="8">Yun-hai</option>
+                            <option value="9">Kyongun</option>
+                            <option value="10">Demônio</option>
+                            <option value="11">Anjo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-fonte">Fonte de Poder</label>
+                        <select id="edit-fonte" class="form-control" onchange="atualizarCorFonteEditor(this.value)">
+                            <option value="fogo" selected>🔥 Fogo</option>
+                            <option value="agua">💧 Água</option>
+                            <option value="vento">🌪️ Vento</option>
+                            <option value="terra">🪨 Terra</option>
+                            <option value="floresta">🌿 Floresta</option>
+                            <option value="trovao">⚡ Trovão</option>
+                            <option value="luz">☀️ Luz</option>
+                            <option value="trevas">🌙 Trevas</option>
+                            <option value="hibrida">🌀 Híbrida (Fogo+Água)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Visibilidade</label>
+                        <div class="toggle-group">
+                            <label class="toggle-option">
+                                <input type="radio" name="edit-visibilidade" value="publico" checked>
+                                🌍 Público
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="edit-visibilidade" value="privado">
+                                🔒 Privado
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ABA 2: ATRIBUTOS E PODERES                -->
+        <!-- ========================================== -->
+        <div id="editor-atributos" class="editor-tab-content">
+            <div class="editor-grid-4col">
+                <!-- Coluna 1 -->
+                <div class="editor-col">
+                    <div class="form-group">
+                        <label>💪 Força</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-forca" value="12" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>🏃 Destreza</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-destreza" value="14" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coluna 2 -->
+                <div class="editor-col">
+                    <div class="form-group">
+                        <label>🧠 Inteligência</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-inteligencia" value="8" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>❤️ Constituição</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-constituicao" value="10" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coluna 3 -->
+                <div class="editor-col">
+                    <div class="form-group">
+                        <label>⚡ Poder</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-poder" value="50" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>👤 Aparência</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-aparencia" value="10" min="1" max="20">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Coluna 4 -->
+                <div class="editor-col">
+                    <div class="form-group">
+                        <label>❤️ FV Total</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-fv-total" value="100" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>✨ PE Total</label>
+                        <div class="number-input-group">
+                            <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                            <input type="number" class="num-input" id="edit-pe-total" value="80" min="1">
+                            <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LINHA INFERIOR: MUNY E FAVORES -->
+            <div class="editor-row-bottom">
+                <div class="form-group">
+                    <label>💰 Muny</label>
+                    <input type="number" class="form-control" id="edit-muny" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label>💎 Favores (<span id="favores-count">3</span>/7)</label>
+                    <div class="favores-container" id="favores-container">
+                        <span class="favor-slot ativo" data-index="0" onclick="toggleFavorEditor(this)">🎲</span>
+                        <span class="favor-slot ativo" data-index="1" onclick="toggleFavorEditor(this)">🎲</span>
+                        <span class="favor-slot ativo" data-index="2" onclick="toggleFavorEditor(this)">🎲</span>
+                        <span class="favor-slot" data-index="3" onclick="toggleFavorEditor(this)">🎲</span>
+                        <span class="favor-slot" data-index="4" onclick="toggleFavorEditor(this)">🎲</span>
+                        <span class="favor-slot" data-index="5" onclick="toggleFavorEditor(this)">🎲</span>
+                        <span class="favor-slot" data-index="6" onclick="toggleFavorEditor(this)">🎲</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ABA 3: PERÍCIAS E TÉCNICAS                -->
+        <!-- ========================================== -->
+        <div id="editor-pericias" class="editor-tab-content">
+            <div class="editor-grid-2col">
+
+                <!-- PERÍCIAS -->
+                <div class="editor-col">
+                    <div class="editor-list-header">
+                        <div class="header-left">
+                            <h4>📋 Perícias</h4>
+                            <button class="btn-especializar-global" id="btn-especializar-global" onclick="abrirEspecializacao()">
+                                <span class="emoji">⭐</span> Especializar
+                            </button>
+                        </div>
+                        <button class="btn-sm btn-primary-sm" onclick="adicionarPericiaEditor()">+ Adicionar</button>
+                    </div>
+                    <div id="editor-pericias-list" class="editor-list">
+                        <!-- Perícia com valor baixo -->
+                        <div class="editor-list-item">
+                            <div class="editor-list-item-info">
+                                <select class="form-control-sm">
+                                    <option>Atletismo</option>
+                                    <option selected>Furtividade</option>
+                                    <option>Arcanismo</option>
+                                    <option>Luta com Espada</option>
+                                </select>
+                                <div class="number-input-group">
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -50)">-50</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -10)">-10</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -1)">-1</button>
+                                    <input type="number" class="num-input" value="3" min="0">
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 1)">+1</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 10)">+10</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 50)">+50</button>
+                                </div>
+                            </div>
+                            <button class="btn-especializar-item" disabled>🎓</button>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+
+                        <!-- Perícia com valor alto (especializável) -->
+                        <div class="editor-list-item especializavel" data-especializada="false">
+                            <div class="editor-list-item-info">
+                                <select class="form-control-sm">
+                                    <option selected>Luta com Espada Longa</option>
+                                    <option>Atletismo</option>
+                                    <option>Furtividade</option>
+                                    <option>Arcanismo</option>
+                                </select>
+                                <div class="number-input-group">
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -50)">-50</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -10)">-10</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -1)">-1</button>
+                                    <input type="number" class="num-input" value="250" min="0">
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 1)">+1</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 10)">+10</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 50)">+50</button>
+                                </div>
+                            </div>
+                            <button class="btn-especializar-item ativo" onclick="toggleEspecializarItemEditor(this)">🎓</button>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+
+                        <div class="editor-list-empty">
+                            <i class="fas fa-plus-circle"></i>
+                            Nenhuma perícia
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TÉCNICAS -->
+                <div class="editor-col">
+                    <div class="editor-list-header">
+                        <div class="header-left">
+                            <h4>✨ Técnicas</h4>
+                            <button class="btn-especializar-global" id="btn-especializar-global-tec" onclick="abrirEspecializacao()">
+                                <span class="emoji">⭐</span> Especializar
+                            </button>
+                        </div>
+                        <button class="btn-sm btn-primary-sm" onclick="adicionarTecnicaEditor()">+ Adicionar</button>
+                    </div>
+                    <div id="editor-tecnicas-list" class="editor-list">
+                        <!-- Técnica com valor baixo -->
+                        <div class="editor-list-item">
+                            <div class="editor-list-item-info">
+                                <select class="form-control-sm">
+                                    <option>Bola de Fogo</option>
+                                    <option selected>Escudo de Gelo</option>
+                                    <option>Raio Fulminante</option>
+                                </select>
+                                <div class="number-input-group">
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -50)">-50</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -10)">-10</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -1)">-1</button>
+                                    <input type="number" class="num-input" value="5" min="0">
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 1)">+1</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 10)">+10</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 50)">+50</button>
+                                </div>
+                            </div>
+                            <button class="btn-especializar-item" disabled>🎓</button>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+
+                        <!-- Técnica com valor alto (especializável) -->
+                        <div class="editor-list-item especializavel" data-especializada="false">
+                            <div class="editor-list-item-info">
+                                <select class="form-control-sm">
+                                    <option selected>Bola de Fogo</option>
+                                    <option>Escudo de Gelo</option>
+                                    <option>Raio Fulminante</option>
+                                </select>
+                                <div class="number-input-group">
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -50)">-50</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -10)">-10</button>
+                                    <button class="btn-num menos" onclick="ajustarNumeroListaEditor(this, -1)">-1</button>
+                                    <input type="number" class="num-input" value="300" min="0">
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 1)">+1</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 10)">+10</button>
+                                    <button class="btn-num mais" onclick="ajustarNumeroListaEditor(this, 50)">+50</button>
+                                </div>
+                            </div>
+                            <button class="btn-especializar-item ativo" onclick="toggleEspecializarItemEditor(this)">🎓</button>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+
+                        <div class="editor-list-empty">
+                            <i class="fas fa-plus-circle"></i>
+                            Nenhuma técnica
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- ABA 4: CARACTERÍSTICAS SOCIAIS            -->
+        <!-- ========================================== -->
+        <div id="editor-social" class="editor-tab-content">
+            <div class="editor-grid-2col">
+
+                <!-- Qualidades -->
+                <div class="editor-col">
+                    <div class="editor-list-header">
+                        <h4>✨ Qualidades</h4>
+                        <button class="btn-sm btn-primary-sm" onclick="adicionarQualidadeEditor()">+ Adicionar</button>
+                    </div>
+                    <div id="editor-qualidades-list" class="editor-list">
+                        <div class="editor-list-item">
+                            <div class="editor-list-item-info-3col">
+                                <input type="text" class="form-control-sm" placeholder="Nome" value="Corajoso" style="flex:2;">
+                                <div class="number-input-group">
+                                    <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                                    <input type="number" class="num-input" value="2" min="1" max="5">
+                                    <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                                </div>
+                                <input type="text" class="form-control-sm" placeholder="Descrição" value="Nunca recua diante do perigo" style="flex:2;">
+                            </div>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+                        <div class="editor-list-empty">
+                            <i class="fas fa-plus-circle"></i>
+                            Nenhuma qualidade
+                        </div>
+                    </div>
+                    <div class="info-box"><i class="fas fa-info-circle"></i> +1 a +5 • Cada +1 = -100 EXP</div>
+                </div>
+
+                <!-- Defeitos -->
+                <div class="editor-col">
+                    <div class="editor-list-header">
+                        <h4>⚠️ Defeitos</h4>
+                        <button class="btn-sm btn-primary-sm" onclick="adicionarDefeitoEditor()">+ Adicionar</button>
+                    </div>
+                    <div id="editor-defeitos-list" class="editor-list">
+                        <div class="editor-list-item">
+                            <div class="editor-list-item-info-3col">
+                                <input type="text" class="form-control-sm" placeholder="Nome" value="Teimoso" style="flex:2;">
+                                <div class="number-input-group">
+                                    <button class="btn-num menos" onclick="ajustarNumeroEditor(this, -1)">−</button>
+                                    <input type="number" class="num-input" value="-1" min="-5" max="-1">
+                                    <button class="btn-num mais" onclick="ajustarNumeroEditor(this, 1)">+</button>
+                                </div>
+                                <input type="text" class="form-control-sm" placeholder="Descrição" value="Dificuldade em aceitar ordens" style="flex:2;">
+                            </div>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+                        <div class="editor-list-empty">
+                            <i class="fas fa-plus-circle"></i>
+                            Nenhum defeito
+                        </div>
+                    </div>
+                    <div class="info-box"><i class="fas fa-info-circle"></i> -1 a -5 • Cada -1 = +100 EXP</div>
+                </div>
+
+                <!-- Títulos (linha completa) -->
+                <div class="editor-col-full">
+                    <div class="editor-list-header">
+                        <h4>🏆 Títulos</h4>
+                        <button class="btn-sm btn-primary-sm" onclick="adicionarTituloEditor()">+ Adicionar</button>
+                    </div>
+                    <div id="editor-titulos-list" class="editor-list editor-list-horizontal">
+                        <div class="editor-list-item">
+                            <div class="editor-list-item-info">
+                                <input type="text" class="form-control" placeholder="Nome do título" value="Devorador de Dragões">
+                            </div>
+                            <button class="btn-remove" onclick="removerItemEditor(this)">✕</button>
+                        </div>
+                        <div class="editor-list-empty">
+                            <i class="fas fa-plus-circle"></i>
+                            Nenhum título
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anotações (linha completa) -->
+                <div class="editor-col-full">
+                    <div class="form-group">
+                        <label>📝 Anotações</label>
+                        <textarea id="edit-anotacoes" class="form-control" rows="3" placeholder="História, objetivos, relações...">Personagem criado para a campanha da Floresta Escura. Busca vingança contra o dragão que destruiu sua vila.</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- FOOTER                                     -->
+        <!-- ========================================== -->
+        <div class="modal-editor-footer">
+            <button class="btn btn-secondary" id="btn-cancelar-editor">Cancelar</button>
+            <button class="btn btn-primary" id="btn-salvar-editor">💾 Salvar</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- INCLUIR MODAIS SECUNDÁRIOS               -->
+<!-- ========================================== -->
+{% include 'parts/modal_caracteristica.html' %}
+{% include 'parts/modal_luta_com.html' %}
+{% include 'parts/modal_criar_faccao.html' %}
+{% include 'parts/modal_especializacao.html' %}

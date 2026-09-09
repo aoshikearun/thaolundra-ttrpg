@@ -1,0 +1,418 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/gerenciar.css') }}">
+{% endblock %}
+
+{% block title %}Gerenciar Conteúdo - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="gerenciar-container">
+
+    <!-- NAV TABS -->
+    <div class="gerenciar-nav">
+        <button class="nav-btn active" data-tab="especies" onclick="switchTab('especies')">
+            <span class="nav-icon">🐾</span> Espécies
+        </button>
+        <button class="nav-btn" data-tab="pericias" onclick="switchTab('pericias')">
+            <span class="nav-icon">🎯</span> Perícias
+        </button>
+        <button class="nav-btn" data-tab="tecnicas" onclick="switchTab('tecnicas')">
+            <span class="nav-icon">✨</span> Técnicas
+        </button>
+        <button class="nav-btn" data-tab="fontes" onclick="switchTab('fontes')">
+            <span class="nav-icon">🔮</span> Fontes de Poder
+        </button>
+        <button class="nav-btn" data-tab="itens" onclick="switchTab('itens')">
+            <span class="nav-icon">🛡️</span> Itens
+        </button>
+        <button class="nav-btn" data-tab="regioes" onclick="switchTab('regioes')">
+            <span class="nav-icon">🗺️</span> Regiões
+        </button>
+    </div>
+
+    <!-- ========== TAB: ESPÉCIES ========== -->
+    <div id="tab-especies" class="tab-content active">
+        <div class="tab-header">
+            <div>
+                <h2>🐾 Espécies</h2>
+                <span class="stats-badge" id="especies-stats">Carregando...</span>
+            </div>
+            <button class="btn btn-primary" onclick="criarEspecie()">
+                <i class="fas fa-plus"></i> Nova Espécie
+            </button>
+        </div>
+
+        <div class="filtros-bar">
+            <input type="text" id="filtro-especies" placeholder="🔍 Buscar espécie..." class="search-input">
+            <button class="btn btn-secondary" onclick="carregarEspeciesG()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="especies-list" class="items-grid">
+            <div class="loading">Carregando espécies...</div>
+        </div>
+    </div>
+
+    <!-- ========== TAB: PERÍCIAS ========== -->
+    <div id="tab-pericias" class="tab-content">
+        <div class="tab-header">
+            <div>
+                <h2>🎯 Perícias</h2>
+                <span class="stats-badge" id="pericias-stats">Carregando...</span>
+            </div>
+            <button class="btn btn-primary" onclick="criarPericia()">
+                <i class="fas fa-plus"></i> Nova Perícia
+            </button>
+        </div>
+
+        <div class="filtros-bar">
+            <input type="text" id="filtro-pericias" placeholder="🔍 Buscar perícia..." class="search-input">
+            <select id="filtro-categoria-pericia" class="filter-select">
+                <option value="">Todas categorias</option>
+                <option value="Simples">Simples</option>
+                <option value="Sociais">Sociais</option>
+                <option value="Combate">Combate</option>
+                <option value="Conhecimento">Conhecimento</option>
+                <option value="Ofício">Ofício</option>
+                <option value="Vontade">Vontade</option>
+            </select>
+            <button class="btn btn-secondary" onclick="carregarPericiasG()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="pericias-list" class="items-grid">
+            <div class="loading">Carregando perícias...</div>
+        </div>
+    </div>
+
+    <!-- ========== TAB: TÉCNICAS ========== -->
+    <div id="tab-tecnicas" class="tab-content">
+        <div class="tab-header">
+            <div>
+                <h2>✨ Técnicas</h2>
+                <span class="stats-badge" id="tecnicas-stats">Carregando...</span>
+            </div>
+            <button class="btn btn-primary" onclick="criarTecnica()">
+                <i class="fas fa-plus"></i> Nova Técnica
+            </button>
+        </div>
+
+        <div class="filtros-bar">
+            <input type="text" id="filtro-tecnicas" placeholder="🔍 Buscar técnica..." class="search-input">
+            <select id="filtro-categoria-tecnica" class="filter-select">
+                <option value="">Todas categorias</option>
+                <option value="Inata">Inata</option>
+                <option value="Básica">Básica</option>
+                <option value="Avançada">Avançada</option>
+                <option value="Última">Última</option>
+            </select>
+            <select id="filtro-fonte-tecnica" class="filter-select">
+                <option value="">Todas fontes</option>
+            </select>
+            <button class="btn btn-secondary" onclick="carregarTecnicasG()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="tecnicas-list" class="items-grid">
+            <div class="loading">Carregando técnicas...</div>
+        </div>
+    </div>
+
+    <!-- ========== TAB: FONTES DE PODER ========== -->
+    <div id="tab-fontes" class="tab-content">
+        <div class="tab-header">
+            <div>
+                <h2>🔮 Fontes de Poder</h2>
+                <span class="stats-badge" id="fontes-stats">Carregando...</span>
+            </div>
+            <button class="btn btn-primary" onclick="criarFontePoder()">
+                <i class="fas fa-plus"></i> Nova Fonte
+            </button>
+        </div>
+
+        <div class="filtros-bar">
+            <input type="text" id="filtro-fontes" placeholder="🔍 Buscar fonte..." class="search-input">
+            <button class="btn btn-secondary" onclick="carregarFontesPoderAdmin()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="fontes-list" class="items-grid">
+            <div class="loading">Carregando fontes de poder...</div>
+        </div>
+    </div>
+
+    <!-- ========== TAB: ITENS ========== -->
+    <div id="tab-itens" class="tab-content">
+        <div class="tab-header">
+            <div>
+                <h2>🛡️ Itens</h2>
+                <span class="stats-badge" id="itens-stats">Carregando...</span>
+            </div>
+            <button class="btn btn-primary" onclick="criarItem()">
+                <i class="fas fa-plus"></i> Novo Item
+            </button>
+        </div>
+
+        <div class="filtros-bar">
+            <input type="text" id="filtro-itens" placeholder="🔍 Buscar item..." class="search-input">
+            <select id="filtro-categoria-item" class="filter-select">
+                <option value="">Todas categorias</option>
+                <option value="Arma">Arma</option>
+                <option value="Armadura">Armadura</option>
+                <option value="Acessório">Acessório</option>
+                <option value="Consumível">Consumível</option>
+                <option value="Munição">Munição</option>
+                <option value="Outro">Outro</option>
+            </select>
+            <button class="btn btn-secondary" onclick="carregarItens()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="itens-list" class="items-grid">
+            <div class="loading">Carregando itens...</div>
+        </div>
+    </div>
+
+    <!-- ========== TAB: REGIÕES ========== -->
+    <div id="tab-regioes" class="tab-content">
+        <div class="tab-header">
+            <div>
+                <h2>🗺️ Regiões</h2>
+                <span class="stats-badge" id="regioes-stats">Carregando...</span>
+            </div>
+            <button class="btn btn-primary" onclick="criarRegiao()">
+                <i class="fas fa-plus"></i> Nova Região
+            </button>
+        </div>
+
+        <div class="filtros-bar">
+            <input type="text" id="filtro-regioes" placeholder="🔍 Buscar região..." class="search-input">
+            <button class="btn btn-secondary" onclick="carregarRegioes()">
+                <i class="fas fa-sync-alt"></i> Atualizar
+            </button>
+        </div>
+
+        <div id="regioes-list" class="items-grid">
+            <div class="loading">Carregando regiões...</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ========== MODAIS ========== -->
+
+<!-- MODAL ESPÉCIE -->
+<div id="modal-especie" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-especie-title">➕ Nova Espécie</h3>
+            <button class="modal-close" onclick="fecharModalEspecie()">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="form-especie" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="especie-nome">Nome *</label>
+                        <input type="text" id="especie-nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="especie-minimo_poder">Poder Mínimo *</label>
+                        <input type="number" id="especie-minimo_poder" name="minimo_poder" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="especie-maximo_poder">Poder Máximo *</label>
+                        <input type="number" id="especie-maximo_poder" name="maximo_poder" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="especie-advanced">Raça Avançada</label>
+                        <select id="especie-advanced" name="advanced">
+                            <option value="0">Não</option>
+                            <option value="1">Sim</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="especie-descricao">Descrição</label>
+                        <textarea id="especie-descricao" name="descricao" rows="4"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="especie-especificidades">Especificidades Mecânicas</label>
+                        <textarea id="especie-especificidades" name="especificidades_mecanicas" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalEspecie()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" onclick="salvarEspecie()">Salvar Espécie</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PERÍCIA -->
+<div id="modal-pericia" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-pericia-title">➕ Nova Perícia</h3>
+            <button class="modal-close" onclick="fecharModalPericia()">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="form-pericia" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pericia-nome">Nome *</label>
+                        <input type="text" id="pericia-nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pericia-categoria">Categoria *</label>
+                        <select id="pericia-categoria" name="categoria" required>
+                            <option value="">Selecione...</option>
+                            <option value="Simples">Simples</option>
+                            <option value="Sociais">Sociais</option>
+                            <option value="Combate">Combate</option>
+                            <option value="Conhecimento">Conhecimento</option>
+                            <option value="Ofício">Ofício</option>
+                            <option value="Vontade">Vontade</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pericia-especializacao">É especialização?</label>
+                        <select id="pericia-especializacao" name="especializacao">
+                            <option value="false">Não</option>
+                            <option value="true">Sim</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="pericia-descricao">Descrição *</label>
+                        <textarea id="pericia-descricao" name="descricao_geral" rows="6" required></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalPericia()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" onclick="salvarPericia()">Salvar Perícia</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TÉCNICA -->
+<div id="modal-tecnica" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-tecnica-title">➕ Nova Técnica</h3>
+            <button class="modal-close" onclick="fecharModalTecnica()">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="form-tecnica" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tecnica-nome">Nome *</label>
+                        <input type="text" id="tecnica-nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tecnica-categoria">Categoria *</label>
+                        <select id="tecnica-categoria" name="categoria" required>
+                            <option value="">Selecione...</option>
+                            <option value="Inata">Inata</option>
+                            <option value="Básica">Básica</option>
+                            <option value="Avançada">Avançada</option>
+                            <option value="Última">Última</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tecnica-fonte">Fonte de Poder *</label>
+                        <select id="tecnica-fonte" name="fonte_de_poder_id" required>
+                            <option value="">Selecione...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tecnica-especializacao">É especialização?</label>
+                        <select id="tecnica-especializacao" name="especializacao">
+                            <option value="false">Não</option>
+                            <option value="true">Sim</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="tecnica-descricao">Descrição *</label>
+                        <textarea id="tecnica-descricao" name="descricao_geral" rows="6" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tecnica-efetividade">Efetividade</label>
+                        <textarea id="tecnica-efetividade" name="efetividade" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tecnica-custo">Custo (PE)</label>
+                        <input type="number" id="tecnica-custo" name="custo" min="0" step="1">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalTecnica()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" onclick="salvarTecnica()">Salvar Técnica</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL FONTE DE PODER -->
+<div id="modal-fonte" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-fonte-title">✏️ Editar Fonte</h3>
+            <button class="modal-close" onclick="fecharModalFonte()">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="form-fonte" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit-fonte-nome">Nome *</label>
+                        <input type="text" id="edit-fonte-nome" name="nome_exibicao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-fonte-categoria">Categoria *</label>
+                        <select id="edit-fonte-categoria" name="categoria" required>
+                            <option value="Natural">Natural</option>
+                            <option value="Artificial">Artificial</option>
+                            <option value="Divina">Divina</option>
+                            <option value="Mecânica">Mecânica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-fonte-hybrid">Tipo</label>
+                        <select id="edit-fonte-hybrid" name="hybrid">
+                            <option value="0">Pura</option>
+                            <option value="1">Híbrida</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="edit-fonte-descricao">Descrição Curta</label>
+                        <textarea id="edit-fonte-descricao" name="descricao_curta" rows="3"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="edit-fonte-componentes">Fontes Componentes</label>
+                        <input type="text" id="edit-fonte-componentes" name="fontes_componentes" placeholder="Ex: Fogo, Água">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-fonte-simbolo">URL do Símbolo</label>
+                        <input type="text" id="edit-fonte-simbolo" name="simbolo_marca_url" placeholder="/static/imgs/symbols/fogo-symbol.png">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModalFonte()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" onclick="atualizarFontePoder()">Atualizar Fonte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/parts/gerenciar.js') }}"></script>
+{% endblock %}

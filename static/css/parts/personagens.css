@@ -1,0 +1,52 @@
+/* personagens.css - Cards e botões da galeria */
+
+.personagem-card-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
+
+.btn-view, .btn-edit, .btn-delete {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.btn-view {
+    background: var(--info-bg);
+    color: var(--info);
+    border: 1px solid var(--info-border);
+}
+
+.btn-view:hover {
+    background: var(--info);
+    color: white;
+}
+
+.btn-edit {
+    background: var(--primary-bg);
+    color: var(--primary);
+    border: 1px solid var(--primary-border);
+}
+
+.btn-edit:hover {
+    background: var(--primary);
+    color: #000;
+}
+
+.btn-delete {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid var(--danger-border);
+}
+
+.btn-delete:hover {
+    background: var(--danger);
+    color: white;
+}

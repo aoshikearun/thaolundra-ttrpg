@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/mesa.css') }}">
+<style>
+.criar-mesa-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.criar-mesa-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.criar-mesa-card h2 {
+    margin-bottom: 25px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.form-help {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    margin-top: 5px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.btn-criar {
+    flex: 1;
+    padding: 12px 20px;
+    background: var(--success-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-criar:hover {
+    background: var(--success-dark);
+}
+
+.btn-voltar {
+    flex: 1;
+    padding: 12px 20px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-voltar:hover {
+    background: var(--bg-tertiary);
+}
+
+.success-message {
+    background: var(--success-light);
+    color: var(--success-color);
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.error-message {
+    background: var(--danger-light);
+    color: var(--danger-color);
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block title %}Criar Mesa - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="criar-mesa-container">
+    <div class="criar-mesa-card">
+        <h2>🎭 Criar Nova Mesa</h2>
+        
+        <div class="success-message" id="successMessage"></div>
+        <div class="error-message" id="errorMessage"></div>
+
+        <form id="criarMesaForm">
+            <div class="form-group">
+                <label for="nome">Nome da Mesa *</label>
+                <input type="text" id="nome" name="nome" required maxlength="100" placeholder="Ex: Aventura na Floresta Escura">
+                <div class="form-help">O nome será exibido para todos os jogadores</div>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" name="descricao" placeholder="Descreva o cenário, história ou objetivo da mesa..."></textarea>
+                <div class="form-help">Adicione contexto para atrair jogadores interessados</div>
+            </div>
+
+            <div class="form-group">
+                <label for="capacidade">Capacidade de Jogadores *</label>
+                <input type="number" id="capacidade" name="capacidade" min="1" max="10" value="5" required>
+                <div class="form-help">Número máximo de jogadores que podem participar</div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="privada" name="privada">
+                    <label for="privada" style="margin: 0;">Mesa Privada</label>
+                </div>
+                <div class="form-help">Mesas privadas só podem ser acessadas por jogadores convidados</div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-criar">✨ Criar Mesa</button>
+                <a href="{{ url_for('mesa.listar_mesas') }}" class="btn-voltar">← Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('criarMesaForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const nome = document.getElementById('nome').value;
+    const descricao = document.getElementById('descricao').value;
+    const capacidade = parseInt(document.getElementById('capacidade').value);
+    const privada = document.getElementById('privada').checked;
+    
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    
+    try {
+        const response = await fetch('{{ url_for("mesa.criar_mesa") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome,
+                descricao,
+                capacidade,
+                privada
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            successMsg.textContent = '✅ Mesa criada com sucesso! Redirecionando...';
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = `{{ url_for('mesa.mesa', mesa_id='') }}${data.mesa_id}`;
+            }, 1500);
+        } else {
+            errorMsg.textContent = '❌ Erro: ' + data.message;
+            errorMsg.style.display = 'block';
+        }
+    } catch (error) {
+        errorMsg.textContent = '❌ Erro ao criar mesa: ' + error.message;
+        errorMsg.style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

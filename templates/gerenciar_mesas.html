@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/gerenciar_mesas.css') }}">
+{% endblock %}
+
+{% block title %}Gerenciar Mesas - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="gerenciar-mesas-container">
+    <div class="header">
+        <h1>⚙️ Gerenciar Mesas</h1>
+        <p class="subtitle">Visualize e gerencie todas as mesas do sistema</p>
+    </div>
+
+    <div class="filtros-bar">
+        <input type="text" id="filtro-mesas" placeholder="🔍 Buscar mesa..." class="search-input">
+        <select id="filtro-status-mesa" class="filter-select">
+            <option value="">Todos os status</option>
+            <option value="1">Ativa</option>
+            <option value="0">Inativa</option>
+            <option value="2">Pausada</option>
+            <option value="3">Encerrada</option>
+        </select>
+        <button class="btn btn-secondary" id="btn-atualizar-mesas">
+            <i class="fas fa-sync-alt"></i> Atualizar
+        </button>
+    </div>
+
+    <div id="mesas-list" class="mesas-grid">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Carregando mesas...</div>
+    </div>
+</div>
+
+<!-- MODAL DE EDIÇÃO DE MESA -->
+<div id="modal-editar-mesa" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-editar-mesa-title">✏️ Editar Mesa</h3>
+            <button class="modal-close" id="btn-fechar-modal-mesa">✕</button>
+        </div>
+        <div class="modal-body">
+            <form id="form-editar-mesa" onsubmit="return false;">
+                <input type="hidden" id="edit-mesa-id">
+                <div class="form-group">
+                    <label for="edit-mesa-nome">Nome *</label>
+                    <input type="text" id="edit-mesa-nome" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-mesa-descricao">Descrição</label>
+                    <textarea id="edit-mesa-descricao" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="edit-mesa-status">Status</label>
+                    <select id="edit-mesa-status" class="form-control">
+                        <option value="1">Ativa</option>
+                        <option value="0">Inativa</option>
+                        <option value="2">Pausada</option>
+                        <option value="3">Encerrada</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancelar-edicao-mesa">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-salvar-edicao-mesa">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/parts/gerenciar_mesas.js') }}"></script>
+{% endblock %}

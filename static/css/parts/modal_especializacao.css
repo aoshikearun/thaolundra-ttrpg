@@ -1,0 +1,703 @@
+/* ========================================== */
+/* MODAL DE ESPECIALIZAÇÃO                    */
+/* ========================================== */
+
+.modal-especializacao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000;
+}
+
+.modal-especializacao.active {
+    display: flex;
+}
+
+.modal-especializacao-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    max-width: 780px;
+    width: 100%;
+    max-height: 92vh;
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+    animation: modalSlideUp 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== HEADER ===== */
+
+.modal-especializacao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--bg-tertiary);
+    flex-shrink: 0;
+}
+
+.modal-especializacao-header h3 {
+    color: var(--primary);
+    font-size: 17px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-especializacao-header .badge-espec {
+    font-size: 10px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    color: #ffd700;
+}
+
+.modal-especializacao-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s;
+}
+
+.modal-especializacao-close:hover {
+    color: var(--danger);
+}
+
+/* ===== BODY ===== */
+
+.modal-especializacao-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ===== GRID ===== */
+
+.especializacao-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.especializacao-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.especializacao-col h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.espec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.espec-header h4 {
+    margin-bottom: 0;
+}
+
+/* ===== LISTAS ===== */
+
+.espec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 4px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    padding: 4px;
+}
+
+.espec-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.espec-list::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 2px;
+}
+
+.espec-list::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+.espec-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background: var(--bg-secondary);
+    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    font-size: 12px;
+    transition: all 0.2s;
+    cursor: default;
+}
+
+.espec-list-item .item-tipo {
+    font-size: 9px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 1px 8px;
+    border-radius: 10px;
+}
+
+.espec-list-item .item-tipo.pericia {
+    color: #4ecdc4;
+    border: 1px solid rgba(78, 205, 196, 0.2);
+    background: rgba(78, 205, 196, 0.08);
+}
+
+.espec-list-item .item-tipo.tecnica {
+    color: #ffd93d;
+    border: 1px solid rgba(255, 217, 61, 0.2);
+    background: rgba(255, 217, 61, 0.08);
+}
+
+.espec-list-item .item-fonte {
+    font-size: 9px;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 1px 8px;
+    border-radius: 10px;
+}
+
+.espec-list-item .item-nome {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.espec-list-item.selecionado {
+    border-color: rgba(255, 215, 0, 0.3);
+    background: rgba(255, 215, 0, 0.06);
+}
+
+.espec-list-item.selecionado .item-nome {
+    color: #ffd700;
+}
+
+.espec-list-empty {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    background: var(--bg-secondary);
+    border-radius: 5px;
+}
+
+.espec-list-empty i {
+    font-size: 18px;
+    display: block;
+    margin-bottom: 4px;
+    opacity: 0.4;
+}
+
+/* ===== ESPECIALIZAÇÕES DISPONÍVEIS ===== */
+
+.espec-disponivel-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    background: var(--bg-secondary);
+    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.espec-disponivel-item:hover {
+    border-color: var(--primary);
+    background: var(--bg-hover);
+}
+
+.espec-disponivel-item.selecionado {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.06);
+}
+
+.espec-disponivel-item .espec-nome {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.espec-disponivel-item .espec-select {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.espec-disponivel-item.selecionado .espec-select {
+    color: #ffd700;
+}
+
+/* ===== BOTÃO CRIAR ===== */
+
+.btn-criar-espec {
+    padding: 4px 14px;
+    background: var(--primary);
+    color: #0d0d1a;
+    border: none;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-criar-espec:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 10px rgba(255, 179, 71, 0.3);
+}
+
+/* ===== RESULTADO ===== */
+
+.resultado-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 14px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.resultado-area .resultado-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.resultado-area .resultado-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.resultado-area .resultado-tipo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.resultado-area .resultado-tipo.pericia {
+    color: #4ecdc4;
+}
+
+.resultado-area .resultado-tipo.tecnica {
+    color: #ffd93d;
+}
+
+.resultado-area .resultado-fonte {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    padding: 2px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+}
+
+.resultado-area .resultado-fonte .fonte-nome {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.resultado-area .resultado-badge {
+    font-size: 10px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    color: #ffd700;
+}
+
+/* ===== DESCRIÇÃO ===== */
+
+.espec-descricao-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 14px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+.espec-descricao-area label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.espec-descricao-area .desc-texto {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    min-height: 40px;
+    padding: 4px 0;
+}
+
+.espec-descricao-area .desc-texto.selecionado {
+    color: #ffd700;
+}
+
+.espec-descricao-area .desc-texto.vazio {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ===== CUSTO ===== */
+
+.custo-especializacao {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 16px;
+    background: rgba(255, 215, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.custo-especializacao .custo-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding-top: 2px;
+}
+
+.custo-especializacao .custo-valor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.custo-especializacao .custo-valor .total {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd700;
+    line-height: 1.2;
+}
+
+.custo-especializacao .custo-valor .humano {
+    font-size: 12px;
+    color: #3b82f6;
+    font-weight: 400;
+}
+
+/* ===== FOOTER ===== */
+
+.modal-especializacao-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-tertiary);
+    flex-shrink: 0;
+}
+
+.btn {
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-hover);
+}
+
+.btn-especializar {
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    color: #0d0d1a;
+}
+
+.btn-especializar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+.btn-especializar .emoji {
+    font-size: 16px;
+}
+
+/* ========================================== */
+/* MODAL POPUP (CRIAR ESPECIALIZAÇÃO)        */
+/* ========================================== */
+
+.modal-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200000;
+}
+
+.modal-popup.active {
+    display: flex;
+}
+
+.modal-popup-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    max-width: 480px;
+    width: 100%;
+    padding: 24px;
+    box-shadow: var(--shadow-xl);
+    animation: modalSlideUp 0.3s ease;
+}
+
+.modal-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.modal-popup-header h4 {
+    color: var(--primary);
+    font-size: 16px;
+    margin: 0;
+}
+
+.modal-popup-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.modal-popup-close:hover {
+    color: var(--danger);
+}
+
+.modal-popup-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal-popup-body .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-popup-body .form-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.modal-popup-body .form-group input,
+.modal-popup-body .form-group textarea {
+    padding: 8px 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+.modal-popup-body .form-group input:focus,
+.modal-popup-body .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.modal-popup-body .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.modal-popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-light);
+}
+
+.modal-popup-footer .btn {
+    padding: 6px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.modal-popup-footer .btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+
+.modal-popup-footer .btn-secondary:hover {
+    background: var(--bg-hover);
+}
+
+.modal-popup-footer .btn-primary {
+    background: var(--primary);
+    color: #0d0d1a;
+}
+
+.modal-popup-footer .btn-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 10px rgba(255, 179, 71, 0.3);
+}
+
+/* ========================================== */
+/* RESPONSIVO                                */
+/* ========================================== */
+
+@media (max-width: 700px) {
+    .especializacao-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-especializacao-content {
+        max-width: 100%;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .modal-especializacao-body {
+        padding: 14px;
+    }
+
+    .custo-especializacao {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        text-align: center;
+    }
+
+    .custo-especializacao .custo-valor {
+        align-items: center;
+    }
+
+    .modal-especializacao-footer {
+        flex-wrap: wrap;
+    }
+
+    .modal-especializacao-footer .btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .resultado-area .resultado-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .modal-popup-content {
+        max-width: 100%;
+        border-radius: 0;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .espec-disponivel-item {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .modal-especializacao-header h3 {
+        font-size: 14px;
+        flex-wrap: wrap;
+    }
+
+    .espec-list-item {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .custo-especializacao .custo-valor .total {
+        font-size: 17px;
+    }
+
+    .modal-popup-content {
+        padding: 16px;
+    }
+}

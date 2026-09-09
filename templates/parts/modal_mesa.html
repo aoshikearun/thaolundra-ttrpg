@@ -1,0 +1,181 @@
+<!-- parts/modal_mesa.html - Modal de criação/edição de mesa -->
+
+<div id="modal-mesa" class="modal-mesa-overlay">
+    <div class="modal-mesa-container">
+
+        <!-- HEADER -->
+        <div class="modal-mesa-header">
+            <h2 id="modal-mesa-title">
+                <i class="fas fa-chess-board"></i>
+                <span id="modal-mesa-title-text">Configurações da Mesa</span>
+            </h2>
+            <button class="modal-mesa-close" onclick="fecharModalMesa()">✕</button>
+        </div>
+
+        <!-- TABS -->
+        <div class="modal-mesa-tabs">
+            <button class="active" data-tab="informacoes" onclick="trocarTabMesa('informacoes')">
+                <i class="fas fa-info-circle"></i> Informações
+            </button>
+            <button data-tab="membros" onclick="trocarTabMesa('membros')">
+                <i class="fas fa-users"></i> Membros
+            </button>
+            <button data-tab="instancias" onclick="trocarTabMesa('instancias')">
+                <i class="fas fa-user-astronaut"></i> Instâncias
+            </button>
+        </div>
+
+        <!-- BODY -->
+        <div class="modal-mesa-body">
+
+            <!-- ===== TAB: INFORMAÇÕES ===== -->
+            <div class="tab-content active" id="tab-informacoes">
+                <div class="info-grid">
+                    <div class="info-field full-width">
+                        <label for="mesa-nome">Nome da Mesa *</label>
+                        <input type="text" id="mesa-nome" class="form-control" placeholder="Ex: Aventura na Floresta Escura" required>
+                    </div>
+                    <div class="info-field full-width">
+                        <label for="mesa-descricao">Descrição</label>
+                        <textarea id="mesa-descricao" class="form-control" rows="3" placeholder="Descreva o cenário, história ou objetivo da mesa..."></textarea>
+                    </div>
+                    <div class="info-field">
+                        <label for="mesa-capacidade-jogadores">👥 Jogadores</label>
+                        <input type="number" id="mesa-capacidade-jogadores" class="form-control" value="6" min="1" max="20">
+                    </div>
+                    <div class="info-field">
+                        <label for="mesa-capacidade-espectadores">👁️ Espectadores</label>
+                        <input type="number" id="mesa-capacidade-espectadores" class="form-control" value="10" min="0" max="50">
+                    </div>
+                    <div class="info-field">
+                        <label>Status</label>
+                        <div class="toggle-row" style="padding: 0;">
+                            <div class="toggle-item">
+                                <div class="toggle active" id="toggle-mesa-ativa" onclick="toggleMesaSwitch('toggle-mesa-ativa')">
+                                    <div class="toggle-ball"></div>
+                                </div>
+                                <label id="label-toggle-mesa-ativa">Ativa</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-field">
+                        <label>Privacidade</label>
+                        <div class="toggle-row" style="padding: 0;">
+                            <div class="toggle-item">
+                                <div class="toggle" id="toggle-mesa-privada" onclick="toggleMesaSwitch('toggle-mesa-privada')">
+                                    <div class="toggle-ball"></div>
+                                </div>
+                                <label id="label-toggle-mesa-privada">Pública</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-field full-width" id="mesa-senhas-area" style="display: none;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="form-group">
+                                <label for="mesa-senha-jogadores">🔑 Senha para Jogadores</label>
+                                <div class="password-field">
+                                    <input type="password" id="mesa-senha-jogadores" class="form-control" placeholder="Sem senha">
+                                    <button type="button" class="btn-reveal" onclick="revelarSenhaMesa('mesa-senha-jogadores')">👁️</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mesa-senha-espectadores">🔑 Senha para Espectadores</label>
+                                <div class="password-field">
+                                    <input type="password" id="mesa-senha-espectadores" class="form-control" placeholder="Sem senha">
+                                    <button type="button" class="btn-reveal" onclick="revelarSenhaMesa('mesa-senha-espectadores')">👁️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-field full-width">
+                        <label for="mesa-imagem-upload">🖼️ Imagem de Fundo</label>
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-placeholder" id="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Clique ou arraste uma imagem</p>
+                                <span>PNG, JPG, WEBP até 5MB</span>
+                            </div>
+                            <div class="upload-preview" id="upload-preview" style="display: none;">
+                                <img id="upload-preview-img" src="" alt="Preview">
+                                <button type="button" class="upload-remove" onclick="removerImagem()">✕</button>
+                            </div>
+                            <input type="file" id="mesa-imagem-upload" accept="image/*" style="display: none;">
+                            <input type="hidden" id="mesa-imagem" value="">
+                        </div>
+                        <div class="image-preview" id="mesa-image-preview">
+                            <div class="placeholder">🖼️ Nenhuma imagem selecionada</div>
+                        </div>
+                    </div>
+                    <div class="info-field full-width" style="grid-column: 1 / -1; padding-top: 8px; border-top: 1px solid var(--border-light);">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted);">
+                            <span>📅 Criada em: <strong id="mesa-data-criacao" style="color: var(--text-secondary);">--</strong></span>
+                            <span>🔄 Atualizada em: <strong id="mesa-data-atualizacao" style="color: var(--text-secondary);">--</strong></span>
+                            <span>🆔 ID: <strong id="mesa-id-display" style="color: var(--text-secondary);">--</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="mesa-id" value="">
+            </div>
+
+            <!-- ===== TAB: MEMBROS ===== -->
+            <div class="tab-content" id="tab-membros">
+                <div class="membros-header">
+                    <h3>👥 Membros da Mesa</h3>
+                    <span class="count" id="membros-count">0 membros</span>
+                </div>
+
+                <div class="membros-lista" id="membros-lista">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+
+                <div class="add-membro">
+                    <input type="text" id="input-add-usuario" placeholder="Nome do usuário para adicionar...">
+                    <select id="select-papel">
+                        <option value="jogador">Jogador</option>
+                        <option value="espectador">Espectador</option>
+                    </select>
+                    <button onclick="adicionarMembro()">Convidar</button>
+                </div>
+            </div>
+
+            <!-- ===== TAB: INSTÂNCIAS ===== -->
+            <div class="tab-content" id="tab-instancias">
+                <div class="instancias-header">
+                    <h3>🎭 Instâncias da Mesa</h3>
+                    <button class="btn-nova-instancia" onclick="novaInstancia()">+ Nova Instância</button>
+                </div>
+
+                <!-- GRUPO -->
+                <div class="secao-instancia">
+                    <div class="secao-titulo">
+                        👥 Grupo <span class="badge-count" id="grupo-count">0</span>
+                    </div>
+                    <div class="instancias-grid" id="grid-grupo">
+                        <!-- Preenchido via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- NPCs e Espectadores -->
+                <div class="secao-instancia">
+                    <div class="secao-titulo">
+                        🧟 NPCs <span class="badge-count" id="npcs-count">0</span>
+                        <span style="margin-left: 12px; color: var(--text-muted);">|</span>
+                        <span style="color: var(--text-muted);">👁️ Espectadores <span class="badge-count" id="espectadores-count" style="background: transparent; color: var(--text-muted); padding: 0;">0</span></span>
+                    </div>
+                    <div class="instancias-grid" id="grid-npcs">
+                        <!-- Preenchido via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="modal-mesa-footer">
+            <button class="btn btn-secondary" onclick="fecharModalMesa()">Cancelar</button>
+            <button class="btn btn-danger" id="btn-excluir-mesa" style="display: none;" onclick="excluirMesaModal()">🗑️ Excluir</button>
+            <button class="btn btn-primary" onclick="salvarMesa(event)">💾 Salvar</button>
+        </div>
+
+    </div>
+</div>

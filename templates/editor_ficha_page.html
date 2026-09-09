@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/editor_ficha.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/parts/modal_especializacao.css') }}">
+{% endblock %}
+
+{% block title %}Editor de Ficha - Thaolundra{% endblock %}
+
+{% block content %}
+<div style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
+    <button class="btn-abrir-editor" onclick="abrirEditorFicha(1)">
+        ✏️ Abrir Editor de Ficha
+    </button>
+</div>
+
+<style>
+    .btn-abrir-editor {
+        padding: 16px 40px;
+        background: var(--primary);
+        color: #0d0d1a;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .btn-abrir-editor:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(255, 179, 71, 0.3);
+    }
+</style>
+
+<!-- EDITOR DE FICHA -->
+{% include 'parts/editor_ficha.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/parts/editor_ficha.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parts/modal_especializacao.js') }}"></script>
+{% endblock %}

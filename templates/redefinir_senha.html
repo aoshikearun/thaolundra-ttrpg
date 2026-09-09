@@ -1,0 +1,144 @@
+<!-- templates/redefinir_senha.html -->
+{% extends "base.html" %}
+
+{% block title %}Redefinir senha - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>🔑 Redefinir senha</h2>
+        <p class="auth-description">Digite sua nova senha.</p>
+        
+        {% if error %}
+        <div class="auth-mensagem erro" style="display: block;">❌ {{ error }}</div>
+        {% endif %}
+        
+        <form id="form-redefinir-senha" onsubmit="return false;">
+            <input type="hidden" id="token" value="{{ token }}">
+            
+            <div class="form-group">
+                <label for="nova_senha">Nova senha</label>
+                <input type="password" id="nova_senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmar_senha">Confirmar senha</label>
+                <input type="password" id="confirmar_senha" placeholder="Digite novamente" required>
+            </div>
+            
+            <div id="mensagem" class="auth-mensagem" style="display: none;"></div>
+            
+            <div class="auth-actions">
+                <button type="submit" class="btn btn-primary" onclick="redefinirSenha()">
+                    Redefinir senha
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+.auth-card {
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    max-width: 420px;
+    width: 100%;
+}
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+.auth-description {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+.auth-mensagem {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: none;
+}
+.auth-mensagem.sucesso {
+    display: block;
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+.auth-mensagem.erro {
+    display: block;
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+.auth-actions {
+    margin-top: 20px;
+}
+.auth-actions .btn {
+    width: 100%;
+    padding: 12px;
+}
+</style>
+
+<script>
+function redefinirSenha() {
+    const token = document.getElementById('token').value;
+    const novaSenha = document.getElementById('nova_senha').value;
+    const confirmarSenha = document.getElementById('confirmar_senha').value;
+    const mensagem = document.getElementById('mensagem');
+    
+    if (!novaSenha || novaSenha.length < 6) {
+        mensagem.className = 'auth-mensagem erro';
+        mensagem.textContent = '❌ Senha deve ter pelo menos 6 caracteres.';
+        mensagem.style.display = 'block';
+        return;
+    }
+    
+    if (novaSenha !== confirmarSenha) {
+        mensagem.className = 'auth-mensagem erro';
+        mensagem.textContent = '❌ Senhas não coincidem.';
+        mensagem.style.display = 'block';
+        return;
+    }
+    
+    mensagem.style.display = 'none';
+    
+    fetch('/redefinir-senha?token=' + encodeURIComponent(token), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            nova_senha: novaSenha,
+            confirmar_senha: confirmarSenha
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        mensagem.style.display = 'block';
+        if (data.success) {
+            mensagem.className = 'auth-mensagem sucesso';
+            mensagem.textContent = '✅ ' + data.message;
+            setTimeout(() => {
+                window.location.href = data.redirect || '/login';
+            }, 2000);
+        } else {
+            mensagem.className = 'auth-mensagem erro';
+            mensagem.textContent = '❌ ' + data.message;
+        }
+    })
+    .catch(error => {
+        mensagem.style.display = 'block';
+        mensagem.className = 'auth-mensagem erro';
+        mensagem.textContent = '❌ Erro ao redefinir senha.';
+    });
+}
+</script>
+{% endblock %}

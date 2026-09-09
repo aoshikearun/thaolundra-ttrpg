@@ -1,0 +1,113 @@
+<!-- ========================================== -->
+<!-- MODAL DE ESPECIALIZAÇÃO                   -->
+<!-- ========================================== -->
+
+<div id="modal-especializacao" class="modal-especializacao">
+    <div class="modal-especializacao-content">
+
+        <!-- HEADER -->
+        <div class="modal-especializacao-header">
+            <h3>
+                ⭐ Especialização
+                <span class="badge-espec" id="badge-itens">0 itens</span>
+            </h3>
+            <button class="modal-especializacao-close" id="btn-fechar-especializacao">✕</button>
+        </div>
+
+        <!-- BODY -->
+        <div class="modal-especializacao-body">
+
+            <!-- GRID: ITENS SELECIONADOS + DISPONÍVEIS -->
+            <div class="especializacao-grid">
+
+                <!-- COLUNA 1: ITENS SELECIONADOS -->
+                <div class="especializacao-col">
+                    <h4>📋 Itens Selecionados</h4>
+                    <div class="espec-list" id="itens-selecionados">
+                        <!-- Preenchido via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- COLUNA 2: ESPECIALIZAÇÕES DISPONÍVEIS -->
+                <div class="especializacao-col">
+                    <div class="espec-header">
+                        <h4>📚 Disponíveis</h4>
+                        <button class="btn-criar-espec" id="btn-abrir-popup-espec">
+                            <i class="fas fa-plus"></i> Criar
+                        </button>
+                    </div>
+                    <div class="espec-list" id="espec-disponiveis">
+                        <!-- Preenchido via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULTADO -->
+            <div class="resultado-area">
+                <span class="resultado-label">Resultado</span>
+                <div class="resultado-content">
+                    <span class="resultado-tipo" id="resultado-tipo">📋 Perícia</span>
+                    <span class="resultado-fonte" id="resultado-fonte" style="display:none;">
+                        Fonte: <span class="fonte-nome"></span>
+                    </span>
+                    <span class="resultado-badge" id="resultado-badge" style="display:none;">Híbrida</span>
+                </div>
+            </div>
+
+            <!-- DESCRIÇÃO DA ESPECIALIZAÇÃO SELECIONADA -->
+            <div class="espec-descricao-area">
+                <label>📖 Descrição</label>
+                <div class="desc-texto vazio" id="espec-descricao-texto">
+                    Selecione uma especialização para ver a descrição.
+                </div>
+            </div>
+
+            <!-- CUSTO DE ESPECIALIZAÇÃO -->
+            <div class="custo-especializacao">
+                <span class="custo-label">💰 Custo total</span>
+                <div class="custo-valor">
+                    <span class="total" id="custo-total">0 EXP</span>
+                    <span class="humano" id="custo-humano">(humano: 0 EXP)</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="modal-especializacao-footer">
+            <button class="btn btn-secondary" id="btn-cancelar-especializacao">Cancelar</button>
+            <button class="btn btn-especializar" id="btn-confirmar-especializacao">
+                <span class="emoji">⭐</span> Especializar
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ========================================== -->
+<!-- MODAL POPUP (CRIAR ESPECIALIZAÇÃO)         -->
+<!-- ========================================== -->
+
+<div id="modal-popup-criar-espec" class="modal-popup">
+    <div class="modal-popup-content">
+        <div class="modal-popup-header">
+            <h4>➕ Nova Especialização</h4>
+            <button class="modal-popup-close" id="btn-fechar-popup-espec">✕</button>
+        </div>
+        <div class="modal-popup-body">
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" id="popup-espec-nome" placeholder="Ex: Mestre Espadachim">
+            </div>
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea id="popup-espec-desc" placeholder="Descreva os efeitos da especialização..."></textarea>
+            </div>
+            <div class="modal-popup-footer">
+                <button class="btn btn-secondary" id="btn-cancelar-popup-espec">Cancelar</button>
+                <button class="btn btn-primary" id="btn-criar-popup-espec">Criar</button>
+            </div>
+        </div>
+    </div>
+</div>

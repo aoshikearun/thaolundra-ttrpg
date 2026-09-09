@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Não Encontrado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/core.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layouts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <canvas class="fog-animation" id="fogCanvas"></canvas>
+
+    <div class="error-container">
+        <div class="error-content">
+            <h1><i class="fas fa-compass"></i> 404</h1>
+            <h2>Página Não Encontrada</h2>
+
+            <div class="error-quote">
+                <p><i class="fas fa-quote-left"></i> Nenhuma mente para pensar.<br>
+                Nenhuma vontade para quebrar.<br>
+                Nenhuma voz para gritar o sofrimento.<br>
+                Nascido de Deus e do Vazio. <i class="fas fa-quote-right"></i></p>
+                <p class="quote-author">— Rei Pálido</p>
+            </div>
+
+            <div class="error-description">
+                <p><i class="fas fa-map-marker-alt"></i> {{ description or "O caminho que você busca se perdeu nas profundezas esquecidas." }}</p>
+            </div>
+
+            <div class="error-actions">
+                <a href="{{ url_for('main.main_page') }}" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Retornar à Superfície
+                </a>
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="fas fa-undo"></i> Voltar
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/403.js') }}"></script>
+</body>
+</html>

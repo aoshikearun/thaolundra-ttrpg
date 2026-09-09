@@ -1,0 +1,481 @@
+/* ============================================ */
+/* USUARIOS.CSS - Estilos completos */
+/* ============================================ */
+
+.usuarios-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.usuarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.usuarios-header h1 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 24px;
+}
+
+.badge-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    padding: 4px 14px;
+    border-radius: 20px;
+}
+
+/* ===== FILTROS ===== */
+.filtros-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtros-bar .search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: 30px;
+    color: var(--text-primary);
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.filtros-bar .search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(255, 179, 71, 0.08);
+}
+
+.filtros-bar .filter-select {
+    padding: 10px 16px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: 30px;
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+.filtros-bar .filter-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* ===== BOTÕES ===== */
+.btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #0d0d1a;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 179, 71, 0.3);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+}
+.btn-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--primary);
+}
+
+/* ===== TABELA ===== */
+.usuarios-table {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr 0.8fr 1fr;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--bg-tertiary);
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr 0.8fr 1fr;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.table-row:hover {
+    background: var(--bg-hover);
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+/* ===== USUÁRIO INFO ===== */
+.usuario-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.usuario-info strong {
+    color: var(--text-primary);
+}
+
+.status-badge {
+    font-size: 10px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.status-ativo {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.status-inativo {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.usuario-email,
+.usuario-nome-social,
+.usuario-ultimo-acesso,
+.usuario-data-criacao {
+    font-size: 13px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ===== NÍVEL BADGE ===== */
+.usuario-nivel {
+    display: flex;
+    align-items: center;
+}
+
+.nivel-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.nivel-0 { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
+.nivel-1 { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+.nivel-2 { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+.nivel-3 { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+.nivel-4 { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+.nivel-5 { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.nivel-6 { background: rgba(255, 179, 71, 0.2); color: #ffb347; }
+.nivel-7 { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
+.nivel-8 { background: rgba(99, 102, 241, 0.2); color: #6366f1; }
+.nivel-9 { background: rgba(244, 63, 94, 0.2); color: #f43f5e; }
+
+/* ===== AÇÕES ===== */
+.acoes {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.acoes .btn-small {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.acoes .btn-edit {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+.acoes .btn-edit:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+.acoes .btn-promote {
+    background: rgba(255, 179, 71, 0.15);
+    color: #ffb347;
+    border: 1px solid rgba(255, 179, 71, 0.2);
+}
+.acoes .btn-promote:hover {
+    background: #ffb347;
+    color: #0d0d1a;
+}
+
+.acoes .btn-demote {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.acoes .btn-demote:hover {
+    background: #f59e0b;
+    color: #0d0d1a;
+}
+
+.acoes .btn-delete {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.acoes .btn-delete:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* ===== ESTADOS ===== */
+.loading {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-muted);
+}
+
+.loading i {
+    font-size: 24px;
+    margin-right: 8px;
+}
+
+.empty {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-muted);
+}
+
+.error {
+    text-align: center;
+    padding: 40px;
+    color: var(--danger);
+}
+
+/* ===== MODAL ===== */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container.active {
+    display: flex;
+}
+
+.modal-container .modal {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    animation: modalSlideUp 0.3s ease;
+}
+
+@keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-container .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--bg-tertiary);
+}
+
+.modal-container .modal-header h3 {
+    color: var(--primary);
+    font-size: 18px;
+    margin: 0;
+}
+
+.modal-container .modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-container .modal-close:hover {
+    color: var(--danger);
+}
+
+.modal-container .modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.modal-container .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.modal-container .form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.modal-container .form-group label {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.modal-container .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 15px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+
+.modal-container .form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(255, 179, 71, 0.08);
+}
+
+.modal-container .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-light);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1000px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .table-header {
+        display: none;
+    }
+
+    .table-row {
+        padding: 16px;
+        margin-bottom: 12px;
+        border: 1px solid var(--border-light);
+        border-radius: 8px;
+    }
+
+    .table-row .usuario-info {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .acoes {
+        justify-content: flex-start;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}
+
+@media (max-width: 768px) {
+    .filtros-bar {
+        flex-direction: column;
+    }
+
+    .filtros-bar .search-input,
+    .filtros-bar .filter-select {
+        width: 100%;
+    }
+
+    .modal-container .modal {
+        max-width: 100%;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .modal-container .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .usuarios-container {
+        padding: 10px;
+    }
+
+    .usuarios-header h1 {
+        font-size: 20px;
+    }
+
+    .usuario-email,
+    .usuario-nome-social,
+    .usuario-ultimo-acesso,
+    .usuario-data-criacao {
+        font-size: 12px;
+    }
+}

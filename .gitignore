@@ -1,0 +1,53 @@
+# ============================================
+# THAOLUNDRA RPG - .gitignore
+# ============================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+venv.bak/
+env.bak/
+
+# Banco de Dados
+*.db
+*.sqlite
+
+# Configurações com credenciais
+config.py
+.env
+database.py
+
+# Logs
+*.log
+debug.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Deploy
+deploy.sh
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup
+*.bak
+backup-*
+pre-*
+
+# Monitoramento
+monitors/
+
+# Arquivos temporários
+*.tmp
+*.temp

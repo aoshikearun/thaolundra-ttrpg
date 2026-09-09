@@ -1,0 +1,227 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+/*=============== STEPPER VARIABLES ===============*/
+:root {
+    --stepper-bg: var(--bg-primary);
+    --stepper-light-grey: var(--text-muted);
+    --stepper-accent: hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit));
+}
+
+/*=============== STEPPER CONTAINER ===============*/
+.stepper-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 60px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.progress-container::before {
+    content: "";
+    background-color: var(--stepper-light-grey);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 3px;
+    width: 100%;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.progress {
+    background: linear-gradient(90deg,
+        hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit)),
+        hsl(var(--primary-hue), var(--primary-sat), calc(var(--primary-lit) + 15%)));
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 3px;
+    width: 0%;
+    z-index: 2;
+    transition: 0.4s ease;
+    border-radius: 3px;
+}
+
+.circle {
+    background: var(--bg-tertiary);
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--stepper-light-grey);
+    transition: 0.4s ease;
+    position: relative;
+    z-index: 5;
+    background-color: var(--bg-card);
+}
+
+.circle.active {
+    border-color: hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit));
+    background: linear-gradient(135deg,
+        hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit)),
+        hsl(var(--primary-hue), var(--primary-sat), calc(var(--primary-lit) - 10%)));
+    box-shadow: 0 0 15px hsla(var(--primary-hue), var(--primary-sat), var(--primary-lit), 0.4);
+}
+
+.circle.active .icon {
+    color: white;
+}
+
+.circle.completed {
+    border-color: var(--success);
+    background: var(--success);
+}
+
+.circle.completed .icon {
+    color: white;
+}
+
+.circle .icon {
+    font-size: 20px;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.circle.active .icon {
+    color: white;
+}
+
+.circle .caption {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    bottom: -28px;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.circle.active .caption {
+    color: hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit));
+    font-weight: 700;
+}
+
+/* Botões de navegação do stepper */
+.stepper-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.stepper-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 40px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 28px;
+    transition: all 0.2s ease;
+}
+
+.stepper-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: var(--bg-hover);
+    border-color: hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit));
+}
+
+.stepper-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.stepper-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.stepper-btn-primary {
+    background: linear-gradient(135deg,
+        hsl(var(--primary-hue), var(--primary-sat), var(--primary-lit)),
+        hsl(var(--primary-hue), var(--primary-sat), calc(var(--primary-lit) - 10%)));
+    color: #000;
+    border: none;
+}
+
+.stepper-btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px hsla(var(--primary-hue), var(--primary-sat), var(--primary-lit), 0.4);
+}
+
+/* Responsividade */
+@media (max-width: 920px) {
+    .circle {
+        height: 42px;
+        width: 42px;
+    }
+
+    .circle .icon {
+        font-size: 18px;
+    }
+
+    .circle .caption {
+        font-size: 9px;
+        bottom: -24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .progress-container {
+        margin-bottom: 50px;
+        overflow-x: auto;
+        padding-bottom: 15px;
+    }
+
+    .progress-container {
+        min-width: 700px;
+    }
+
+    .circle {
+        height: 38px;
+        width: 38px;
+    }
+
+    .circle .icon {
+        font-size: 16px;
+    }
+
+    .circle .caption {
+        font-size: 8px;
+        bottom: -22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .circle {
+        height: 34px;
+        width: 34px;
+    }
+
+    .circle .icon {
+        font-size: 14px;
+    }
+
+    .circle .caption {
+        font-size: 7px;
+        bottom: -20px;
+    }
+
+    .stepper-btn {
+        padding: 8px 20px;
+        font-size: 12px;
+    }
+}

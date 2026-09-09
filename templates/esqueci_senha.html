@@ -1,0 +1,133 @@
+<!-- templates/esqueci_senha.html -->
+{% extends "base.html" %}
+
+{% block title %}Esqueci minha senha - Thaolundra{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>🔐 Esqueci minha senha</h2>
+        <p class="auth-description">Digite seu email para receber o link de recuperação.</p>
+        
+        <form id="form-esqueci-senha" onsubmit="return false;">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="seu@email.com" required>
+            </div>
+            
+            <div id="mensagem" class="auth-mensagem" style="display: none;"></div>
+            
+            <div class="auth-actions">
+                <button type="submit" class="btn btn-primary" onclick="solicitarReset()">
+                    Enviar link de recuperação
+                </button>
+            </div>
+            
+            <div class="auth-links">
+                <a href="/login">← Voltar para o login</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+.auth-card {
+    background: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border-light);
+    max-width: 420px;
+    width: 100%;
+}
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+.auth-description {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+.auth-mensagem {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    display: none;
+}
+.auth-mensagem.sucesso {
+    display: block;
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+.auth-mensagem.erro {
+    display: block;
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+.auth-actions {
+    margin-top: 20px;
+}
+.auth-actions .btn {
+    width: 100%;
+    padding: 12px;
+}
+.auth-links {
+    text-align: center;
+    margin-top: 16px;
+}
+.auth-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+.auth-links a:hover {
+    color: var(--primary);
+}
+</style>
+
+<script>
+function solicitarReset() {
+    const email = document.getElementById('email').value.trim();
+    const mensagem = document.getElementById('mensagem');
+    
+    if (!email) {
+        mensagem.className = 'auth-mensagem erro';
+        mensagem.textContent = '❌ Digite seu email.';
+        mensagem.style.display = 'block';
+        return;
+    }
+    
+    mensagem.style.display = 'none';
+    
+    fetch('/esqueci-senha', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        mensagem.style.display = 'block';
+        if (data.success) {
+            mensagem.className = 'auth-mensagem sucesso';
+            mensagem.textContent = '✅ ' + data.message;
+        } else {
+            mensagem.className = 'auth-mensagem erro';
+            mensagem.textContent = '❌ ' + data.message;
+        }
+    })
+    .catch(error => {
+        mensagem.style.display = 'block';
+        mensagem.className = 'auth-mensagem erro';
+        mensagem.textContent = '❌ Erro ao enviar solicitação.';
+    });
+}
+</script>
+{% endblock %}
